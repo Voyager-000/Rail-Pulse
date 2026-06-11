@@ -34,18 +34,30 @@ coach_type_map = meta["coach_type_map"]
 print("   ✅ All models loaded")
 
 # ─── Indian Railways Definitions ──────────────────────────────────────────────
-TRAINS = [
-    {"id": "12951", "name": "Mumbai Rajdhani", "route": "NDLS→BCT", "departs": "16:55", "popularity": 0.92},
-    {"id": "12301", "name": "Howrah Rajdhani", "route": "NDLS→HWH", "departs": "17:00", "popularity": 0.85},
-    {"id": "22691", "name": "Rajdhani Express", "route": "SBC→NDLS", "departs": "20:00", "popularity": 0.78},
-    {"id": "12627", "name": "Karnataka Express", "route": "SBC→NDLS", "departs": "08:45", "popularity": 0.72},
-    {"id": "12001", "name": "Bhopal Shatabdi", "route": "NDLS→BPL", "departs": "06:00", "popularity": 0.81},
-    {"id": "12259", "name": "Sealdah Duronto", "route": "SDAH→NDLS", "departs": "23:05", "popularity": 0.74},
-    {"id": "19019", "name": "Dehradun Express", "route": "BDTS→DDN", "departs": "22:10", "popularity": 0.65},
-    {"id": "12137", "name": "Punjab Mail", "route": "CSTM→FZR", "departs": "19:30", "popularity": 0.68},
-    {"id": "12393", "name": "Sampoorna Kranti", "route": "RJPB→NDLS", "departs": "14:15", "popularity": 0.75},
-    {"id": "12431", "name": "Trivandrum Rajdhani", "route": "NDLS→TVC", "departs": "11:30", "popularity": 0.77},
-]
+real_trains_df = pd.read_csv("data/real_trains.csv", header=None, names=["id", "name"], dtype=str)
+real_trains_df = real_trains_df[real_trains_df["id"].str.isnumeric() == True].dropna()
+real_trains_df = real_trains_df[real_trains_df["name"].str.contains("Express|Rajdhani|Shatabdi|Duronto|Mail", case=False, na=False)]
+real_trains_df = real_trains_df.sample(n=50, random_state=42).reset_index(drop=True)
+
+TRAINS = []
+for idx, row in real_trains_df.iterrows():
+    words = row["name"].split()
+    route = f"{words[0][:4].upper()}→{words[-2][:4].upper()}" if len(words) >= 3 else "VAR→RTE"
+    # Generate consistent random departure time based on train ID
+    np.random.seed(int(row["id"]))
+    hour = np.random.randint(5, 23)
+    minute = np.random.choice([0, 15, 30, 45])
+    departs = f"{hour:02d}:{minute:02d}"
+    popularity = np.random.uniform(0.65, 0.95)
+    TRAINS.append({
+        "id": row["id"],
+        "name": row["name"].title(),
+        "route": route,
+        "departs": departs,
+        "popularity": popularity
+    })
+np.random.seed() # reset seed
+
 
 COACH_TYPES = {
     "SL": {"prefix": "S", "count": 10, "capacity": 72},

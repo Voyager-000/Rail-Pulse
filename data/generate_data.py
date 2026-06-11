@@ -11,28 +11,26 @@ import os
 np.random.seed(42)
 
 # ─── Indian Railways Train Definitions ────────────────────────────────────────
-TRAINS = [
-    {"id": "12951", "name": "Mumbai Rajdhani", "route": "NDLS-BCT", "popularity": 0.92},
-    {"id": "12952", "name": "Mumbai Rajdhani (Return)", "route": "BCT-NDLS", "popularity": 0.88},
-    {"id": "12301", "name": "Howrah Rajdhani", "route": "NDLS-HWH", "popularity": 0.85},
-    {"id": "12302", "name": "Howrah Rajdhani (Return)", "route": "HWH-NDLS", "popularity": 0.83},
-    {"id": "22691", "name": "Rajdhani Express", "route": "SBC-NDLS", "popularity": 0.78},
-    {"id": "12627", "name": "Karnataka Express", "route": "SBC-NDLS", "popularity": 0.72},
-    {"id": "12628", "name": "Karnataka Express (Return)", "route": "NDLS-SBC", "popularity": 0.70},
-    {"id": "12001", "name": "Bhopal Shatabdi", "route": "NDLS-BPL", "popularity": 0.81},
-    {"id": "12002", "name": "Bhopal Shatabdi (Return)", "route": "BPL-NDLS", "popularity": 0.79},
-    {"id": "12259", "name": "Sealdah Duronto", "route": "SDAH-NDLS", "popularity": 0.74},
-    {"id": "12260", "name": "Sealdah Duronto (Return)", "route": "NDLS-SDAH", "popularity": 0.71},
-    {"id": "19019", "name": "Dehradun Express", "route": "BDTS-DDN", "popularity": 0.65},
-    {"id": "12137", "name": "Punjab Mail", "route": "CSTM-FZR", "popularity": 0.68},
-    {"id": "12138", "name": "Punjab Mail (Return)", "route": "FZR-CSTM", "popularity": 0.66},
-    {"id": "12393", "name": "Sampoorna Kranti", "route": "RJPB-NDLS", "popularity": 0.75},
-    {"id": "12394", "name": "Sampoorna Kranti (Return)", "route": "NDLS-RJPB", "popularity": 0.73},
-    {"id": "12223", "name": "Duronto Express", "route": "LTT-ERS", "popularity": 0.69},
-    {"id": "12431", "name": "Trivandrum Rajdhani", "route": "NDLS-TVC", "popularity": 0.77},
-    {"id": "12432", "name": "Trivandrum Rajdhani (Return)", "route": "TVC-NDLS", "popularity": 0.75},
-    {"id": "12561", "name": "Swatantra Senani Express", "route": "DBRG-NDLS", "popularity": 0.62},
-]
+print("Loading real train data...")
+real_trains_df = pd.read_csv("data/real_trains.csv", header=None, names=["id", "name"], dtype=str)
+# Filter valid trains (id must be numeric) and sample 50 popular-looking trains
+real_trains_df = real_trains_df[real_trains_df["id"].str.isnumeric() == True].dropna()
+real_trains_df = real_trains_df[real_trains_df["name"].str.contains("Express|Rajdhani|Shatabdi|Duronto|Mail", case=False, na=False)]
+real_trains_df = real_trains_df.sample(n=50, random_state=42).reset_index(drop=True)
+
+TRAINS = []
+for idx, row in real_trains_df.iterrows():
+    # Attempt to extract origin/destination from name, fallback to generic
+    words = row["name"].split()
+    route = f"{words[0][:4].upper()}-{words[-2][:4].upper()}" if len(words) >= 3 else "VAR-ROUTE"
+    popularity = np.random.uniform(0.65, 0.95)
+    TRAINS.append({
+        "id": row["id"],
+        "name": row["name"].title(),
+        "route": route,
+        "popularity": popularity
+    })
+
 
 # ─── Coach Layouts ────────────────────────────────────────────────────────────
 COACH_TYPES = {

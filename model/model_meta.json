@@ -39,8 +39,8 @@
     "2A": 2,
     "1A": 3
   },
-  "trained_at": "2026-06-11T19:30:20.294638",
-  "train_samples": 105120,
-  "overcrowd_auc": 0.9951,
-  "ticketless_auc": 0.9929
+  "trained_at": "2026-06-11T19:56:49.683796",
+  "train_samples": 262800,
+  "overcrowd_auc": 0.994,
+  "ticketless_auc": 0.9931
 }
