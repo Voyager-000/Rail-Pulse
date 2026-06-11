@@ -116,10 +116,19 @@ function animateCount(id, target) {
 }
 
 // ── Filters / Selects ─────────────────────────────────────────────────────────
+let filtersPopulated = false;
+
 function populateFilters() {
   const trainSel = document.getElementById('filter-train');
   const heatSel = document.getElementById('heatmap-train-select');
   const stSel = document.getElementById('filter-station');
+
+  if (filtersPopulated) {
+    // Just refresh the currently selected heatmap data
+    if (heatSel.value) renderHeatmap();
+    return;
+  }
+  filtersPopulated = true;
 
   DATA.trains.forEach(t => {
     [trainSel, heatSel].forEach(sel => {
