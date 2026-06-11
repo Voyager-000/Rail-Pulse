@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  railpulse-api:
+    build: .
+    container_name: railpulse-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./model:/app/model
+    environment:
+      - PYTHONIOENCODING=utf-8
