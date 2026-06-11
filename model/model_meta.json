@@ -1,0 +1,46 @@
+{
+  "overcrowd_features": [
+    "day_of_week",
+    "is_holiday",
+    "is_festival_surge",
+    "is_weekend",
+    "event_nearby",
+    "event_pressure_score",
+    "occupancy_ratio",
+    "overbooking_index",
+    "cancellation_rate",
+    "historical_avg_occupancy",
+    "route_popularity",
+    "coach_type_enc",
+    "coach_number",
+    "day_type_enc",
+    "route_risk",
+    "pressure_score"
+  ],
+  "ticketless_features": [
+    "day_of_week",
+    "is_holiday",
+    "is_festival_surge",
+    "is_weekend",
+    "event_nearby",
+    "occupancy_ratio",
+    "overbooking_index",
+    "past_ticketless_incidents",
+    "cancellation_rate",
+    "historical_avg_occupancy",
+    "route_popularity",
+    "coach_type_enc",
+    "coach_number",
+    "ticketless_pressure"
+  ],
+  "coach_type_map": {
+    "SL": 0,
+    "3A": 1,
+    "2A": 2,
+    "1A": 3
+  },
+  "trained_at": "2026-06-11T19:30:20.294638",
+  "train_samples": 105120,
+  "overcrowd_auc": 0.9951,
+  "ticketless_auc": 0.9929
+}

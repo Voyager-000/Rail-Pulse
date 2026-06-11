@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RailPulse – AI Railway Risk Intelligence Platform</title>
+  <meta name="description" content="RailPulse: AI-powered railway risk and resource allocation platform. Predicts overcrowding, ticketless travel, and station congestion in real-time using existing booking data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HEADER ════════ -->
+<header class="header" id="main-header">
+  <div class="header-left">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+          <path d="M6 20L10 8L14 15L18 10L22 20" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="22" cy="20" r="2" fill="#ff4d4d"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">RailPulse</span>
+        <span class="logo-tagline">AI Risk Intelligence</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-center">
+    <div class="status-pill" id="status-pill">
+      <span class="status-dot"></span>
+      <span id="status-text">LIVE</span>
+    </div>
+    <div class="header-date" id="header-date"></div>
+  </div>
+
+  <div class="header-right">
+    <div class="clock-block">
+      <div class="clock-time" id="live-clock">--:--:--</div>
+      <div class="clock-label">Last sync: <span id="last-sync">--:--</span></div>
+    </div>
+    <button class="refresh-btn" id="refresh-btn" onclick="refreshDashboard()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"/>
+        <polyline points="1 20 1 14 7 14"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+      </svg>
+      Refresh
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ TAGLINE ════════ -->
+<div class="tagline-bar">
+  <p>Unlike solutions requiring passenger app installs, <strong>RailPulse works entirely on existing railway booking & operational data.</strong> Passengers don't change anything. Staff get smarter directions.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ FILTERS ════════ -->
+<div class="filters-bar">
+  <div class="filter-group">
+    <label for="filter-date">Date</label>
+    <input type="date" id="filter-date" />
+  </div>
+  <div class="filter-group">
+    <label for="filter-train">Train</label>
+    <select id="filter-train">
+      <option value="all">All Trains</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="filter-risk">Risk Level</label>
+    <select id="filter-risk">
+      <option value="all">All Levels</option>
+      <option value="critical">🔴 Critical</option>
+      <option value="high">🟠 High</option>
+      <option value="medium">🟡 Medium</option>
+      <option value="low">🟢 Low</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="filter-station">Station</label>
+    <select id="filter-station">
+      <option value="all">All Stations</option>
+    </select>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SUMMARY CARDS ════ -->
+<section class="summary-grid" id="summary-section">
+  <div class="stat-card critical" id="card-critical">
+    <div class="stat-icon">🔴</div>
+    <div class="stat-body">
+      <div class="stat-value" id="stat-critical">--</div>
+      <div class="stat-label">Critical Coaches</div>
+      <div class="stat-sub" id="stat-critical-sub">Loading...</div>
+    </div>
+    <div class="stat-pulse"></div>
+  </div>
+  <div class="stat-card high" id="card-high">
+    <div class="stat-icon">🟠</div>
+    <div class="stat-body">
+      <div class="stat-value" id="stat-high">--</div>
+      <div class="stat-label">High-Risk Trains</div>
+      <div class="stat-sub" id="stat-high-sub">Loading...</div>
+    </div>
+  </div>
+  <div class="stat-card station" id="card-station">
+    <div class="stat-icon">🏛️</div>
+    <div class="stat-body">
+      <div class="stat-value" id="stat-stations">--</div>
+      <div class="stat-label">Stations Monitored</div>
+      <div class="stat-sub" id="stat-stations-sub">Loading...</div>
+    </div>
+  </div>
+  <div class="stat-card staff" id="card-staff">
+    <div class="stat-icon">👥</div>
+    <div class="stat-body">
+      <div class="stat-value" id="stat-staff">--</div>
+      <div class="stat-label">Staff Deployments</div>
+      <div class="stat-sub" id="stat-staff-sub">Loading...</div>
+    </div>
+  </div>
+  <div class="stat-card ticketless" id="card-ticketless">
+    <div class="stat-icon">⚠️</div>
+    <div class="stat-body">
+      <div class="stat-value" id="stat-ticketless">--</div>
+      <div class="stat-label">Ticketless Alerts</div>
+      <div class="stat-sub" id="stat-ticketless-sub">Loading...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN GRID ════════ -->
+<main class="main-grid">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-col">
+
+    <!-- Coach Heatmap Panel -->
+    <section class="panel" id="heatmap-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="10" rx="2"/>
+            <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+            <line x1="12" y1="12" x2="12" y2="12"/>
+          </svg>
+          Coach Risk Heatmap
+        </div>
+        <select class="panel-select" id="heatmap-train-select" onchange="renderHeatmap()">
+          <option value="">Select Train</option>
+        </select>
+      </div>
+      <div class="train-info-bar" id="train-info-bar">
+        <span id="train-route"></span>
+        <span id="train-departs"></span>
+        <span class="aggregate-risk-badge" id="agg-risk-badge"></span>
+      </div>
+      <div class="coach-type-legend">
+        <span class="legend-item"><span class="legend-dot low"></span> Low</span>
+        <span class="legend-item"><span class="legend-dot medium"></span> Medium</span>
+        <span class="legend-item"><span class="legend-dot high"></span> High</span>
+        <span class="legend-item"><span class="legend-dot critical"></span> Critical</span>
+      </div>
+      <div class="heatmap-container" id="heatmap-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading predictions...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Station Congestion Timeline -->
+    <section class="panel" id="station-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          Station Congestion Forecast
+        </div>
+        <div class="panel-subtitle">Next 6 hours</div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="congestion-chart"></canvas>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-col">
+
+    <!-- Train Risk Leaderboard -->
+    <section class="panel" id="leaderboard-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          Train Risk Leaderboard
+        </div>
+        <select class="panel-select" id="sort-trains" onchange="renderLeaderboard()">
+          <option value="risk">By Risk</option>
+          <option value="departure">By Departure</option>
+        </select>
+      </div>
+      <div class="leaderboard-list" id="leaderboard-list">
+        <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+      </div>
+    </section>
+
+    <!-- AI Recommendation Panel -->
+    <section class="panel" id="rec-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+          AI Deployment Directives
+        </div>
+        <div class="ai-badge">🤖 AI-Generated</div>
+      </div>
+      <div class="rec-list" id="rec-list">
+        <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+      </div>
+    </section>
+
+    <!-- Risk Factor Breakdown -->
+    <section class="panel" id="radar-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
+          </svg>
+          Risk Factor Breakdown
+        </div>
+        <div class="panel-subtitle" id="radar-subtitle">Select a coach</div>
+      </div>
+      <div class="radar-container">
+        <canvas id="radar-chart"></canvas>
+      </div>
+      <div class="risk-factor-bars" id="risk-bars">
+        <div class="rf-item">
+          <span class="rf-label">Occupancy Level</span>
+          <div class="rf-bar-bg"><div class="rf-bar" id="rf-occupancy" style="width:0%"></div></div>
+          <span class="rf-val" id="rfv-occupancy">--%</span>
+        </div>
+        <div class="rf-item">
+          <span class="rf-label">Holiday Pressure</span>
+          <div class="rf-bar-bg"><div class="rf-bar" id="rf-holiday" style="width:0%"></div></div>
+          <span class="rf-val" id="rfv-holiday">--%</span>
+        </div>
+        <div class="rf-item">
+          <span class="rf-label">Ticketless History</span>
+          <div class="rf-bar-bg"><div class="rf-bar" id="rf-ticketless" style="width:0%"></div></div>
+          <span class="rf-val" id="rfv-ticketless">--</span>
+        </div>
+        <div class="rf-item">
+          <span class="rf-label">Event Proximity</span>
+          <div class="rf-bar-bg"><div class="rf-bar" id="rf-event" style="width:0%"></div></div>
+          <span class="rf-val" id="rfv-event">--%</span>
+        </div>
+        <div class="rf-item">
+          <span class="rf-label">Cancellation Surge</span>
+          <div class="rf-bar-bg"><div class="rf-bar" id="rf-cancel" style="width:0%"></div></div>
+          <span class="rf-val" id="rfv-cancel">--%</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ COACH DETAIL ════ -->
+<div class="coach-detail-overlay" id="coach-overlay" onclick="closeCoachDetail(event)">
+  <div class="coach-detail-modal" id="coach-modal">
+    <button class="modal-close" onclick="closeCoachDetail(null, true)">✕</button>
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Coach Details</div>
+      <div class="modal-risk-badge" id="modal-risk-badge"></div>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-stat">
+        <div class="modal-stat-val" id="m-occupancy">--%</div>
+        <div class="modal-stat-label">Occupancy</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-val danger" id="m-overcrowd">--%</div>
+        <div class="modal-stat-label">Overcrowding Risk</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-val warning" id="m-ticketless">--%</div>
+        <div class="modal-stat-label">Ticketless Risk</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-val" id="m-seats">--/--</div>
+        <div class="modal-stat-label">Seats Booked</div>
+      </div>
+    </div>
+    <div class="modal-recommendation" id="modal-rec"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="footer-left">
+    <strong>RailPulse</strong> · AI-Powered Railway Risk Intelligence · 
+    Built on existing booking data — no passenger behavioral change required.
+  </div>
+  <div class="footer-right">
+    Model AUC: <span id="footer-auc">--</span> · 
+    Data refreshed every 60s · 
+    <span id="footer-date"></span>
+  </div>
+</footer>
+
+<script src="../data/predictions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,3750 @@
+{
+  "generated_at": "2026-06-11T19:41:00.802015",
+  "date": "2026-06-11",
+  "summary": {
+    "total_trains": 10,
+    "total_coaches": 180,
+    "critical_coaches": 0,
+    "high_risk_coaches": 0,
+    "high_risk_trains": 0,
+    "medium_risk_trains": 0,
+    "stations_monitored": 8,
+    "staff_recommended": 32,
+    "total_recommendations": 8,
+    "avg_risk_score": 0.154,
+    "model_accuracy": {
+      "overcrowding_auc": 0.9951,
+      "ticketless_auc": 0.9929
+    }
+  },
+  "trains": [
+    {
+      "train_id": "19019",
+      "train_name": "Dehradun Express",
+      "route": "BDTS\u2192DDN",
+      "departs": "22:10",
+      "aggregate_risk": 0.188,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 26,
+          "occupancy_ratio": 0.374,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.961,
+          "composite_risk": 0.384,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 37.4,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 8.7
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.685,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.906,
+          "composite_risk": 0.363,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 68.5,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 5.9
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.467,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.9,
+          "composite_risk": 0.36,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 46.7,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.8
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 35,
+          "occupancy_ratio": 0.489,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.88,
+          "composite_risk": 0.352,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 48.9,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 6.3
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.594,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.88,
+          "composite_risk": 0.352,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.4,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 5.9
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 34,
+          "occupancy_ratio": 0.482,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.813,
+          "composite_risk": 0.325,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 48.2,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 14.2
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.548,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.797,
+          "composite_risk": 0.319,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 54.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 9.9
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 40,
+          "occupancy_ratio": 0.568,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.784,
+          "composite_risk": 0.314,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 56.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 4.1
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 38,
+          "occupancy_ratio": 0.532,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.775,
+          "composite_risk": 0.31,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 53.2,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 7.1
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.469,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.75,
+          "composite_risk": 0.3,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 46.9,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 14.8
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 23,
+          "occupancy_ratio": 0.371,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 37.1,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 12.5
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 25,
+          "occupancy_ratio": 0.397,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 39.7,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 7.3
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 25,
+          "occupancy_ratio": 0.392,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 39.2,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 5.2
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 17,
+          "occupancy_ratio": 0.279,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 27.9,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 12.1
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.434,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.4,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 12.8
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.431,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.1,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 4.2
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 20,
+          "occupancy_ratio": 0.435,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.5,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 4.6
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 7,
+          "occupancy_ratio": 0.418,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 41.8,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 8.7
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12393",
+      "train_name": "Sampoorna Kranti",
+      "route": "RJPB\u2192NDLS",
+      "departs": "14:15",
+      "aggregate_risk": 0.173,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 48,
+          "occupancy_ratio": 0.675,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.968,
+          "composite_risk": 0.387,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 67.5,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 11.9
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.707,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.956,
+          "composite_risk": 0.382,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 70.7,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 13.9
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.707,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.919,
+          "composite_risk": 0.368,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 70.7,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 12.6
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.554,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.897,
+          "composite_risk": 0.359,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 55.4,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 13.6
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.518,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.845,
+          "composite_risk": 0.338,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 51.8,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 11.6
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 45,
+          "occupancy_ratio": 0.629,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.788,
+          "composite_risk": 0.315,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 62.9,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 6.8
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.599,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.754,
+          "composite_risk": 0.302,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.9,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 9.6
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.687,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.752,
+          "composite_risk": 0.301,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 68.7,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 5.8
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 51,
+          "occupancy_ratio": 0.72,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.529,
+          "composite_risk": 0.212,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 72.0,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 9.8
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.686,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.389,
+          "composite_risk": 0.156,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 68.6,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 5.0
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.623,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 62.3,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 13.9
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 28,
+          "occupancy_ratio": 0.444,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 44.4,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 3.5
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.622,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 62.2,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 6.9
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 34,
+          "occupancy_ratio": 0.532,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 53.2,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 4.3
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 21,
+          "occupancy_ratio": 0.477,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 47.7,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 4.5
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 22,
+          "occupancy_ratio": 0.481,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 48.1,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 13.2
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 21,
+          "occupancy_ratio": 0.461,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 46.1,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 11.7
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 6,
+          "occupancy_ratio": 0.376,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 37.6,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 3.1
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12259",
+      "train_name": "Sealdah Duronto",
+      "route": "SDAH\u2192NDLS",
+      "departs": "23:05",
+      "aggregate_risk": 0.171,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 41,
+          "occupancy_ratio": 0.579,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.983,
+          "composite_risk": 0.393,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 57.9,
+            "holiday_weight": 0,
+            "historical_incidents": 12,
+            "event_pressure": 20,
+            "cancellation_surge": 13.8
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.593,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.964,
+          "composite_risk": 0.386,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.3,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 10.4
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.606,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.927,
+          "composite_risk": 0.371,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 60.6,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 9.6
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 47,
+          "occupancy_ratio": 0.662,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.915,
+          "composite_risk": 0.366,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 66.2,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 5.7
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 51,
+          "occupancy_ratio": 0.715,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.85,
+          "composite_risk": 0.34,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 71.5,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.9
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 47,
+          "occupancy_ratio": 0.663,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.827,
+          "composite_risk": 0.331,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 66.3,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.5
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.691,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.743,
+          "composite_risk": 0.297,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 69.1,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 11.7
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.643,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.606,
+          "composite_risk": 0.243,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 64.3,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 5.0
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.642,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.475,
+          "composite_risk": 0.19,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 64.2,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 13.5
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.614,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.376,
+          "composite_risk": 0.151,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 61.4,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 13.7
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 12,
+          "occupancy_ratio": 0.677,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.032,
+          "composite_risk": 0.013,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 67.7,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 5.2
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 30,
+          "occupancy_ratio": 0.483,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 48.3,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.8
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 27,
+          "occupancy_ratio": 0.436,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.6,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 7.4
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 29,
+          "occupancy_ratio": 0.468,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 46.8,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 10.2
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 29,
+          "occupancy_ratio": 0.462,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 46.2,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 5.8
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 18,
+          "occupancy_ratio": 0.403,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 40.3,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 5.8
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 15,
+          "occupancy_ratio": 0.339,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 33.9,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 14.2
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 22,
+          "occupancy_ratio": 0.491,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 49.1,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 10.0
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "22691",
+      "train_name": "Rajdhani Express",
+      "route": "SBC\u2192NDLS",
+      "departs": "20:00",
+      "aggregate_risk": 0.169,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.619,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.976,
+          "composite_risk": 0.39,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 61.9,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 11.8
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 51,
+          "occupancy_ratio": 0.71,
+          "overcrowding_risk": 0.001,
+          "ticketless_risk": 0.928,
+          "composite_risk": 0.372,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 71.0,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 12.9
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.64,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.926,
+          "composite_risk": 0.37,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 64.0,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 7.0
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.6,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.863,
+          "composite_risk": 0.345,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 60.0,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 10.0
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 48,
+          "occupancy_ratio": 0.668,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.854,
+          "composite_risk": 0.342,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 66.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 14.2
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 38,
+          "occupancy_ratio": 0.538,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.762,
+          "composite_risk": 0.305,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 53.8,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 10.0
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 45,
+          "occupancy_ratio": 0.627,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.742,
+          "composite_risk": 0.297,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 62.7,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 6.7
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 35,
+          "occupancy_ratio": 0.487,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.629,
+          "composite_risk": 0.252,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 48.7,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 12.4
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.602,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.594,
+          "composite_risk": 0.238,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 60.2,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 14.8
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 47,
+          "occupancy_ratio": 0.656,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.335,
+          "composite_risk": 0.134,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 65.6,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 12.4
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 9,
+          "occupancy_ratio": 0.522,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.008,
+          "composite_risk": 0.003,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.2,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 6.5
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 29,
+          "occupancy_ratio": 0.458,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 45.8,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 7.8
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 27,
+          "occupancy_ratio": 0.427,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 42.7,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 9.6
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 35,
+          "occupancy_ratio": 0.562,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 56.2,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 5.3
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 29,
+          "occupancy_ratio": 0.467,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 46.7,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 4.9
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 22,
+          "occupancy_ratio": 0.498,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 49.8,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.2
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 20,
+          "occupancy_ratio": 0.437,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.7,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 7.7
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 20,
+          "occupancy_ratio": 0.442,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 44.2,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 8.4
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12137",
+      "train_name": "Punjab Mail",
+      "route": "CSTM\u2192FZR",
+      "departs": "19:30",
+      "aggregate_risk": 0.156,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.6,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.976,
+          "composite_risk": 0.391,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 60.0,
+            "holiday_weight": 0,
+            "historical_incidents": 12,
+            "event_pressure": 20,
+            "cancellation_surge": 6.5
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.516,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.969,
+          "composite_risk": 0.388,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 51.6,
+            "holiday_weight": 0,
+            "historical_incidents": 12,
+            "event_pressure": 20,
+            "cancellation_surge": 12.0
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.554,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.911,
+          "composite_risk": 0.365,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 55.4,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 12.2
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 34,
+          "occupancy_ratio": 0.475,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.756,
+          "composite_risk": 0.302,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 47.5,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 7.7
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.608,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.755,
+          "composite_risk": 0.302,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 60.8,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 8.0
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.588,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.72,
+          "composite_risk": 0.288,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 58.8,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 5.8
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 47,
+          "occupancy_ratio": 0.66,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.67,
+          "composite_risk": 0.268,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 66.0,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 3.3
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 40,
+          "occupancy_ratio": 0.565,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.607,
+          "composite_risk": 0.243,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 56.5,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 13.4
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 38,
+          "occupancy_ratio": 0.529,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.449,
+          "composite_risk": 0.18,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.9,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 11.7
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.69,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.187,
+          "composite_risk": 0.075,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 69.0,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 7.2
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 28,
+          "occupancy_ratio": 0.449,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 44.9,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 9.2
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 32,
+          "occupancy_ratio": 0.501,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 50.1,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 14.8
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 23,
+          "occupancy_ratio": 0.373,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 37.3,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 12.5
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 26,
+          "occupancy_ratio": 0.411,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 41.1,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 3.7
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 24,
+          "occupancy_ratio": 0.535,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 53.5,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 4.8
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 22,
+          "occupancy_ratio": 0.483,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 48.3,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 3.7
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.417,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 41.7,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 14.4
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 8,
+          "occupancy_ratio": 0.492,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 49.2,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 4.7
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12301",
+      "train_name": "Howrah Rajdhani",
+      "route": "NDLS\u2192HWH",
+      "departs": "17:00",
+      "aggregate_risk": 0.149,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.516,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.893,
+          "composite_risk": 0.357,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 51.6,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 4.9
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.708,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.88,
+          "composite_risk": 0.352,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 70.8,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 8.7
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.696,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.848,
+          "composite_risk": 0.339,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 69.6,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 11.3
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 55,
+          "occupancy_ratio": 0.765,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.775,
+          "composite_risk": 0.312,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 76.5,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.7
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.648,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.661,
+          "composite_risk": 0.265,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 64.8,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 14.0
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.59,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.653,
+          "composite_risk": 0.261,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.0,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 6.3
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.703,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.644,
+          "composite_risk": 0.258,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 70.3,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 13.6
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 55,
+          "occupancy_ratio": 0.777,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.586,
+          "composite_risk": 0.236,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 77.7,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 14.4
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.738,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.509,
+          "composite_risk": 0.205,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 73.8,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 3.1
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.685,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.237,
+          "composite_risk": 0.095,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 68.5,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 7.6
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.585,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 58.5,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 12.4
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 39,
+          "occupancy_ratio": 0.61,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 61.0,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 13.2
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.579,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 57.9,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 6.3
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 35,
+          "occupancy_ratio": 0.556,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 55.6,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 5.1
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.434,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 43.4,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 9.3
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 22,
+          "occupancy_ratio": 0.493,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 49.3,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 12.8
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 28,
+          "occupancy_ratio": 0.614,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 61.4,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 11.0
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 10,
+          "occupancy_ratio": 0.587,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 58.7,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.7
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12951",
+      "train_name": "Mumbai Rajdhani",
+      "route": "NDLS\u2192BCT",
+      "departs": "16:55",
+      "aggregate_risk": 0.148,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 54,
+          "occupancy_ratio": 0.752,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.922,
+          "composite_risk": 0.37,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 75.2,
+            "holiday_weight": 0,
+            "historical_incidents": 11,
+            "event_pressure": 20,
+            "cancellation_surge": 7.9
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 51,
+          "occupancy_ratio": 0.713,
+          "overcrowding_risk": 0.001,
+          "ticketless_risk": 0.911,
+          "composite_risk": 0.365,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 71.3,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 13.1
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 59,
+          "occupancy_ratio": 0.831,
+          "overcrowding_risk": 0.009,
+          "ticketless_risk": 0.861,
+          "composite_risk": 0.35,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 83.1,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 6.7
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 55,
+          "occupancy_ratio": 0.769,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.826,
+          "composite_risk": 0.332,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 76.9,
+            "holiday_weight": 0,
+            "historical_incidents": 10,
+            "event_pressure": 20,
+            "cancellation_surge": 15.0
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 56,
+          "occupancy_ratio": 0.783,
+          "overcrowding_risk": 0.004,
+          "ticketless_risk": 0.777,
+          "composite_risk": 0.313,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 78.3,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.2
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 57,
+          "occupancy_ratio": 0.803,
+          "overcrowding_risk": 0.005,
+          "ticketless_risk": 0.705,
+          "composite_risk": 0.285,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 80.3,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 5.9
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.736,
+          "overcrowding_risk": 0.002,
+          "ticketless_risk": 0.525,
+          "composite_risk": 0.211,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 73.6,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 6.5
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 59,
+          "occupancy_ratio": 0.823,
+          "overcrowding_risk": 0.006,
+          "ticketless_risk": 0.407,
+          "composite_risk": 0.166,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 82.3,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 4.7
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 54,
+          "occupancy_ratio": 0.75,
+          "overcrowding_risk": 0.003,
+          "ticketless_risk": 0.38,
+          "composite_risk": 0.154,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 75.0,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 3.0
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 56,
+          "occupancy_ratio": 0.783,
+          "overcrowding_risk": 0.006,
+          "ticketless_risk": 0.266,
+          "composite_risk": 0.11,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 78.3,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 14.1
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 38,
+          "occupancy_ratio": 0.603,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 60.3,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 8.6
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.68,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 68.0,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 5.2
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 40,
+          "occupancy_ratio": 0.63,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 63.0,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 10.8
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 36,
+          "occupancy_ratio": 0.566,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 56.6,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 8.7
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 25,
+          "occupancy_ratio": 0.55,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 55.0,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 4.5
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 28,
+          "occupancy_ratio": 0.624,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 62.4,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 9.7
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 28,
+          "occupancy_ratio": 0.609,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 60.9,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 12.7
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 11,
+          "occupancy_ratio": 0.661,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 66.1,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 14.9
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12627",
+      "train_name": "Karnataka Express",
+      "route": "SBC\u2192NDLS",
+      "departs": "08:45",
+      "aggregate_risk": 0.146,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.465,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.89,
+          "composite_risk": 0.356,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 46.5,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 14.8
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.608,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.847,
+          "composite_risk": 0.339,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 60.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 12.1
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.598,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.84,
+          "composite_risk": 0.336,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 11.0
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.588,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.834,
+          "composite_risk": 0.334,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 58.8,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 10.6
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.623,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.785,
+          "composite_risk": 0.314,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 62.3,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 9.3
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.595,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.695,
+          "composite_risk": 0.278,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 59.5,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 6.6
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 38,
+          "occupancy_ratio": 0.528,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.508,
+          "composite_risk": 0.203,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.8,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 7.4
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.586,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.465,
+          "composite_risk": 0.186,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 58.6,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 9.4
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.681,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.356,
+          "composite_risk": 0.143,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 68.1,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 12.6
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.611,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.336,
+          "composite_risk": 0.134,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 61.1,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 6.8
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 24,
+          "occupancy_ratio": 0.378,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 37.8,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 5.1
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 29,
+          "occupancy_ratio": 0.457,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 45.7,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 6.5
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 32,
+          "occupancy_ratio": 0.513,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 51.3,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 12.7
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.53,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 53.0,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 5.6
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 24,
+          "occupancy_ratio": 0.531,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 53.1,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 12.9
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.415,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 41.5,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 11.0
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 18,
+          "occupancy_ratio": 0.404,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 40.4,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 13.1
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 8,
+          "occupancy_ratio": 0.48,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 48.0,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 12.9
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12431",
+      "train_name": "Trivandrum Rajdhani",
+      "route": "NDLS\u2192TVC",
+      "departs": "11:30",
+      "aggregate_risk": 0.146,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.619,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.874,
+          "composite_risk": 0.35,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 61.9,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 8.5
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 41,
+          "occupancy_ratio": 0.575,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.847,
+          "composite_risk": 0.339,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 57.5,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 9.3
+          }
+        },
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 45,
+          "occupancy_ratio": 0.631,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.841,
+          "composite_risk": 0.336,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 63.1,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 11.9
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 45,
+          "occupancy_ratio": 0.636,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.82,
+          "composite_risk": 0.328,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 63.6,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 3.1
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.683,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.789,
+          "composite_risk": 0.316,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 68.3,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 9.1
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 45,
+          "occupancy_ratio": 0.634,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.742,
+          "composite_risk": 0.297,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 63.4,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 4.6
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.749,
+          "overcrowding_risk": 0.001,
+          "ticketless_risk": 0.527,
+          "composite_risk": 0.211,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 74.9,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 9.3
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 43,
+          "occupancy_ratio": 0.608,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.467,
+          "composite_risk": 0.187,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 60.8,
+            "holiday_weight": 0,
+            "historical_incidents": 5,
+            "event_pressure": 20,
+            "cancellation_surge": 12.3
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 47,
+          "occupancy_ratio": 0.654,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.345,
+          "composite_risk": 0.138,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 65.4,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 4.9
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.615,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.305,
+          "composite_risk": 0.122,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 61.5,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 11.7
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 35,
+          "occupancy_ratio": 0.555,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 55.5,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 10.0
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.587,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 58.7,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 9.2
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.526,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.6,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.1
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 34,
+          "occupancy_ratio": 0.533,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 53.3,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 5.4
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 20,
+          "occupancy_ratio": 0.443,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 44.3,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 5.7
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 21,
+          "occupancy_ratio": 0.476,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 47.6,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 8.4
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 19,
+          "occupancy_ratio": 0.429,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 42.9,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 9.5
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 8,
+          "occupancy_ratio": 0.491,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 49.1,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.5
+          }
+        }
+      ]
+    },
+    {
+      "train_id": "12001",
+      "train_name": "Bhopal Shatabdi",
+      "route": "NDLS\u2192BPL",
+      "departs": "06:00",
+      "aggregate_risk": 0.094,
+      "critical_coaches": 0,
+      "coaches": [
+        {
+          "coach_id": "S5",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.646,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.735,
+          "composite_risk": 0.294,
+          "risk_level": "medium",
+          "risk_factors": {
+            "occupancy_pct": 64.6,
+            "holiday_weight": 0,
+            "historical_incidents": 9,
+            "event_pressure": 20,
+            "cancellation_surge": 6.4
+          }
+        },
+        {
+          "coach_id": "S7",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 44,
+          "occupancy_ratio": 0.621,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.567,
+          "composite_risk": 0.227,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 62.1,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 3.6
+          }
+        },
+        {
+          "coach_id": "S8",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 49,
+          "occupancy_ratio": 0.69,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.489,
+          "composite_risk": 0.196,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 69.0,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 6.7
+          }
+        },
+        {
+          "coach_id": "S4",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.737,
+          "overcrowding_risk": 0.001,
+          "ticketless_risk": 0.47,
+          "composite_risk": 0.189,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 73.7,
+            "holiday_weight": 0,
+            "historical_incidents": 8,
+            "event_pressure": 20,
+            "cancellation_surge": 8.4
+          }
+        },
+        {
+          "coach_id": "S1",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.652,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.45,
+          "composite_risk": 0.18,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 65.2,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 4.6
+          }
+        },
+        {
+          "coach_id": "S10",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.748,
+          "overcrowding_risk": 0.002,
+          "ticketless_risk": 0.442,
+          "composite_risk": 0.178,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 74.8,
+            "holiday_weight": 0,
+            "historical_incidents": 7,
+            "event_pressure": 20,
+            "cancellation_surge": 12.2
+          }
+        },
+        {
+          "coach_id": "S6",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 42,
+          "occupancy_ratio": 0.595,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.286,
+          "composite_risk": 0.114,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 59.5,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 6.3
+          }
+        },
+        {
+          "coach_id": "S2",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 46,
+          "occupancy_ratio": 0.649,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.28,
+          "composite_risk": 0.112,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 64.9,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 3.5
+          }
+        },
+        {
+          "coach_id": "S3",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 50,
+          "occupancy_ratio": 0.698,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.263,
+          "composite_risk": 0.105,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 69.8,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 13.8
+          }
+        },
+        {
+          "coach_id": "S9",
+          "coach_type": "SL",
+          "capacity": 72,
+          "booked_seats": 53,
+          "occupancy_ratio": 0.737,
+          "overcrowding_risk": 0.001,
+          "ticketless_risk": 0.226,
+          "composite_risk": 0.091,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 73.7,
+            "holiday_weight": 0,
+            "historical_incidents": 6,
+            "event_pressure": 20,
+            "cancellation_surge": 5.1
+          }
+        },
+        {
+          "coach_id": "B1",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 33,
+          "occupancy_ratio": 0.524,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.4,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 13.7
+          }
+        },
+        {
+          "coach_id": "B2",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 37,
+          "occupancy_ratio": 0.583,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 58.3,
+            "holiday_weight": 0,
+            "historical_incidents": 2,
+            "event_pressure": 20,
+            "cancellation_surge": 14.8
+          }
+        },
+        {
+          "coach_id": "B3",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 30,
+          "occupancy_ratio": 0.469,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 46.9,
+            "holiday_weight": 0,
+            "historical_incidents": 4,
+            "event_pressure": 20,
+            "cancellation_surge": 6.3
+          }
+        },
+        {
+          "coach_id": "B4",
+          "coach_type": "3A",
+          "capacity": 64,
+          "booked_seats": 31,
+          "occupancy_ratio": 0.489,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 48.9,
+            "holiday_weight": 0,
+            "historical_incidents": 3,
+            "event_pressure": 20,
+            "cancellation_surge": 7.9
+          }
+        },
+        {
+          "coach_id": "A1",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 25,
+          "occupancy_ratio": 0.56,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 56.0,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 10.7
+          }
+        },
+        {
+          "coach_id": "A2",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 23,
+          "occupancy_ratio": 0.508,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 50.8,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 9.4
+          }
+        },
+        {
+          "coach_id": "A3",
+          "coach_type": "2A",
+          "capacity": 46,
+          "booked_seats": 24,
+          "occupancy_ratio": 0.526,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 52.6,
+            "holiday_weight": 0,
+            "historical_incidents": 0,
+            "event_pressure": 20,
+            "cancellation_surge": 5.4
+          }
+        },
+        {
+          "coach_id": "H1",
+          "coach_type": "1A",
+          "capacity": 18,
+          "booked_seats": 8,
+          "occupancy_ratio": 0.476,
+          "overcrowding_risk": 0.0,
+          "ticketless_risk": 0.0,
+          "composite_risk": 0.0,
+          "risk_level": "low",
+          "risk_factors": {
+            "occupancy_pct": 47.6,
+            "holiday_weight": 0,
+            "historical_incidents": 1,
+            "event_pressure": 20,
+            "cancellation_surge": 12.7
+          }
+        }
+      ]
+    }
+  ],
+  "stations": [
+    {
+      "station_code": "NDLS",
+      "station_name": "New Delhi",
+      "platforms": 16,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.767,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.949,
+          "level": "critical"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.91,
+          "level": "critical"
+        }
+      ]
+    },
+    {
+      "station_code": "BCT",
+      "station_name": "Mumbai Central",
+      "platforms": 8,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.793,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.788,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.689,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "HWH",
+      "station_name": "Howrah Junction",
+      "platforms": 23,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.821,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.782,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.85,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "SBC",
+      "station_name": "KSR Bengaluru City",
+      "platforms": 10,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.743,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.722,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.7,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "SDAH",
+      "station_name": "Sealdah",
+      "platforms": 13,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 0.971,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.75,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.79,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.751,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "CSTM",
+      "station_name": "Chhatrapati Shivaji Terminus",
+      "platforms": 18,
+      "current_congestion": 1.0,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 1.0,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.801,
+          "level": "high"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.816,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.787,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "BPL",
+      "station_name": "Bhopal Junction",
+      "platforms": 6,
+      "current_congestion": 0.887,
+      "current_level": "critical",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 0.887,
+          "level": "critical"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 0.881,
+          "level": "critical"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 0.897,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.649,
+          "level": "medium"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.674,
+          "level": "high"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.678,
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "station_code": "TVC",
+      "station_name": "Thiruvananthapuram Central",
+      "platforms": 5,
+      "current_congestion": 0.822,
+      "current_level": "high",
+      "timeline": [
+        {
+          "hour": "19:00",
+          "congestion": 0.822,
+          "level": "high"
+        },
+        {
+          "hour": "20:00",
+          "congestion": 0.814,
+          "level": "high"
+        },
+        {
+          "hour": "21:00",
+          "congestion": 0.895,
+          "level": "critical"
+        },
+        {
+          "hour": "22:00",
+          "congestion": 0.553,
+          "level": "medium"
+        },
+        {
+          "hour": "23:00",
+          "congestion": 0.621,
+          "level": "medium"
+        },
+        {
+          "hour": "00:00",
+          "congestion": 0.534,
+          "level": "medium"
+        }
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "NDLS",
+      "station_name": "New Delhi",
+      "action": "Increase crowd management staff at New Delhi (NDLS) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "BCT",
+      "station_name": "Mumbai Central",
+      "action": "Increase crowd management staff at Mumbai Central (BCT) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "HWH",
+      "station_name": "Howrah Junction",
+      "action": "Increase crowd management staff at Howrah Junction (HWH) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "SBC",
+      "station_name": "KSR Bengaluru City",
+      "action": "Increase crowd management staff at KSR Bengaluru City (SBC) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "SDAH",
+      "station_name": "Sealdah",
+      "action": "Increase crowd management staff at Sealdah (SDAH) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "CSTM",
+      "station_name": "Chhatrapati Shivaji Terminus",
+      "action": "Increase crowd management staff at Chhatrapati Shivaji Terminus (CSTM) \u2014 congestion expected in next 2 hours",
+      "confidence": 100.0,
+      "reason": "Predicted congestion index: 100%"
+    },
+    {
+      "priority": "critical",
+      "type": "station_management",
+      "station_code": "BPL",
+      "station_name": "Bhopal Junction",
+      "action": "Increase crowd management staff at Bhopal Junction (BPL) \u2014 congestion expected in next 2 hours",
+      "confidence": 88.7,
+      "reason": "Predicted congestion index: 89%"
+    },
+    {
+      "priority": "high",
+      "type": "station_management",
+      "station_code": "TVC",
+      "station_name": "Thiruvananthapuram Central",
+      "action": "Increase crowd management staff at Thiruvananthapuram Central (TVC) \u2014 congestion expected in next 2 hours",
+      "confidence": 82.2,
+      "reason": "Predicted congestion index: 82%"
+    }
+  ]
+}
