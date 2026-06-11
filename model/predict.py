@@ -115,19 +115,19 @@ for train in TRAINS:
             capacity = cinfo["capacity"]
             coach_type_enc = coach_type_map[ctype]
 
-            # Simulate today's booking state
-            base_occ = train["popularity"] * 0.72
-            surge = 1.25 if is_holiday else (1.10 if is_weekend else 1.0)
-            sl_boost = 1.15 if ctype == "SL" else 0.90
-            occupancy_ratio = min(1.35, base_occ * surge * sl_boost + np.random.normal(0, 0.06))
+            # Simulate today's booking state (boosted for hackathon demo)
+            base_occ = train["popularity"] * 0.95
+            surge = 1.4 if is_holiday else (1.25 if is_weekend else 1.15)
+            sl_boost = 1.25 if ctype == "SL" else 0.95
+            occupancy_ratio = min(1.50, base_occ * surge * sl_boost + np.random.normal(0, 0.08))
             occupancy_ratio = max(0.1, occupancy_ratio)
             booked_seats = int(capacity * occupancy_ratio)
             overbooking_index = max(0, occupancy_ratio - 1.0)
-            cancellation_rate = np.random.uniform(0.03, 0.15)
-            historical_avg = train["popularity"] * 0.70
+            cancellation_rate = np.random.uniform(0.02, 0.10)
+            historical_avg = train["popularity"] * 0.85
             route_popularity = train["popularity"]
             past_ticketless = max(0, int(np.random.normal(
-                (0.12 if ctype == "SL" else 0.04) * capacity * (1.5 if is_festival_surge else 1.0), 2
+                (0.20 if ctype == "SL" else 0.08) * capacity * (1.5 if is_festival_surge else 1.2), 2
             )))
 
             route_risk = route_popularity * historical_avg
