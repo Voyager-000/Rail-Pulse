@@ -8,6 +8,8 @@ let selectedCoach = null;
 let refreshTimer = null;
 let trainMap = null;
 let mapMarkers = {};
+let specificTrainMap = null;
+let specificTrainLayer = null;
 
 const STATION_COORDS = {
   'NDLS': [28.6139, 77.2090], // Delhi
@@ -72,31 +74,61 @@ function startClock() {
       now.toLocaleTimeString('en-IN', { hour12: false });
     document.getElementById('header-date').textContent =
       now.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
-    document.getElementById('footer-date').textContent = now.toLocaleDateString('en-IN');
   };
   tick();
   setInterval(tick, 1000);
   document.getElementById('filter-date').value = new Date().toISOString().split('T')[0];
 }
 
+// ── Tab Navigation ────────────────────────────────────────────────────────────
+let activeTab = 'overview';
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view-section').forEach(v => v.style.display = 'none');
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('view-' + tab).style.display = 'block';
+
+  if (tab === 'train') {
+    // Re-render the heatmap for the currently selected train
+    renderSpecificTrainView();
+  }
+}
+
 // ── Summary Cards ─────────────────────────────────────────────────────────────
 function renderSummary() {
   const s = DATA.summary;
-  animateCount('stat-critical', s.critical_coaches);
+  const allCoaches = DATA.trains.flatMap(t => t.coaches);
+
+  // Compute real counts live from coach data — never trust a capped static field
+  const criticalCount = allCoaches.filter(c => c.risk_level === 'critical').length;
+  const ticketlessCount = allCoaches.filter(c => c.ticketless_risk > 0.5).length;
+  const staffCount = allCoaches.reduce((acc, c) => {
+    if (c.risk_level === 'critical')      return acc + (c.overcrowding_risk > 0.85 ? 4 : c.overcrowding_risk > 0.70 ? 3 : 2);
+    else if (c.risk_level === 'high')     return acc + (c.ticketless_risk > 0.6 ? 2 : 1);
+    return acc;
+  }, 0);
+  // Add station management staff (6 per critical station, 4 per high)
+  const stationStaff = (DATA.stations || []).reduce((acc, st) => {
+    if (st.current_level === 'critical') return acc + 6;
+    if (st.current_level === 'high')     return acc + 4;
+    return acc;
+  }, 0);
+
+  animateCount('stat-critical', criticalCount);
   animateCount('stat-high', s.high_risk_trains);
   animateCount('stat-stations', s.stations_monitored);
-  animateCount('stat-staff', s.staff_recommended);
-
-  const ticketlessCoaches = DATA.trains.reduce((acc, t) =>
-    acc + t.coaches.filter(c => c.ticketless_risk > 0.5).length, 0);
-  animateCount('stat-ticketless', ticketlessCoaches);
+  animateCount('stat-staff', staffCount + stationStaff);
+  animateCount('stat-ticketless', ticketlessCount);
 
   document.getElementById('stat-critical-sub').textContent =
     `${Math.round(s.avg_risk_score * 100)}% avg risk score`;
   document.getElementById('stat-high-sub').textContent =
     `${s.medium_risk_trains} medium-risk`;
   document.getElementById('stat-stations-sub').textContent = 'Real-time monitoring';
-  document.getElementById('stat-staff-sub').textContent = 'Recommended deployments';
+  document.getElementById('stat-staff-sub').textContent =
+    `${staffCount} on-train + ${stationStaff} station`;
   document.getElementById('stat-ticketless-sub').textContent = 'Coaches flagged';
   document.getElementById('footer-auc').textContent =
     `OC: ${s.model_accuracy?.overcrowding_auc || '--'} | TL: ${s.model_accuracy?.ticketless_auc || '--'}`;
@@ -119,25 +151,10 @@ function animateCount(id, target) {
 let filtersPopulated = false;
 
 function populateFilters() {
-  const trainSel = document.getElementById('filter-train');
-  const heatSel = document.getElementById('heatmap-train-select');
   const stSel = document.getElementById('filter-station');
 
-  if (filtersPopulated) {
-    // Just refresh the currently selected heatmap data
-    if (heatSel.value) renderHeatmap();
-    return;
-  }
+  if (filtersPopulated) return;
   filtersPopulated = true;
-
-  DATA.trains.forEach(t => {
-    [trainSel, heatSel].forEach(sel => {
-      const opt = document.createElement('option');
-      opt.value = t.train_id;
-      opt.textContent = `${t.train_id} — ${t.train_name}`;
-      sel.appendChild(opt);
-    });
-  });
 
   DATA.stations.forEach(s => {
     const opt = document.createElement('option');
@@ -145,11 +162,25 @@ function populateFilters() {
     opt.textContent = `${s.station_code} — ${s.station_name}`;
     stSel.appendChild(opt);
   });
+}
+
+let trainSelectPopulated = false;
+
+function populateTrainSelect() {
+  const heatSel = document.getElementById('heatmap-train-select');
+  if (trainSelectPopulated) return;
+  trainSelectPopulated = true;
+
+  DATA.trains.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.train_id;
+    opt.textContent = `${t.train_id} — ${t.train_name}`;
+    heatSel.appendChild(opt);
+  });
 
   // Auto-select first train
   if (DATA.trains.length) {
     heatSel.value = DATA.trains[0].train_id;
-    renderHeatmap();
   }
 }
 
@@ -213,8 +244,7 @@ function renderMap() {
       
       circle.on('click', () => {
         document.getElementById('heatmap-train-select').value = t.train_id;
-        renderHeatmap();
-        document.getElementById('heatmap-panel').scrollIntoView({ behavior: 'smooth' });
+        switchTab('train');
       });
       
       mapMarkers[t.train_id] = circle;
@@ -223,8 +253,8 @@ function renderMap() {
 }
 
 // ── Coach Heatmap ─────────────────────────────────────────────────────────────
-function renderHeatmap() {
-  const trainId = document.getElementById('heatmap-train-select').value;
+function renderHeatmap(overrideTrainId) {
+  const trainId = overrideTrainId || document.getElementById('heatmap-train-select').value;
   const train = DATA.trains.find(t => t.train_id === trainId);
   if (!train) return;
 
@@ -376,6 +406,106 @@ function updateRadar(coach) {
   });
 }
 
+// ── Train-Specific Stats (Inspector Tab) ──────────────────────────────────────
+function renderSpecificTrainView() {
+  if (!DATA) return;
+  populateTrainSelect();
+
+  const heatSel = document.getElementById('heatmap-train-select');
+  const trainId = heatSel.value || (DATA.trains[0] && DATA.trains[0].train_id);
+  if (!trainId) return;
+  if (!heatSel.value && trainId) heatSel.value = trainId;
+
+  const train = DATA.trains.find(t => t.train_id === trainId);
+  if (!train) return;
+
+  // Per-train summary cards
+  const criticalCoaches = train.coaches.filter(c => c.risk_level === 'critical').length;
+  const ticketlessCoaches = train.coaches.filter(c => c.ticketless_risk > 0.5).length;
+  const staffNeeded = train.coaches.reduce((acc, c) => {
+    return acc + (c.composite_risk > 0.7 ? 3 : c.composite_risk > 0.45 ? 2 : 1);
+  }, 0);
+
+  document.getElementById('train-stat-critical').textContent = criticalCoaches;
+  document.getElementById('train-stat-staff').textContent = staffNeeded;
+  document.getElementById('train-stat-ticketless').textContent = ticketlessCoaches;
+  document.getElementById('train-stat-agg').textContent =
+    `${Math.round(train.aggregate_risk * 100)}% aggregate risk`;
+
+  // Per-train recommendations
+  const recList = document.getElementById('rec-list');
+  recList.innerHTML = '';
+  const trainRecs = DATA.recommendations
+    .filter(r => r.train_id === trainId || r.train_name === train.train_name)
+    .slice(0, 15);
+
+  if (trainRecs.length === 0) {
+    recList.innerHTML = `<div class="loading-state"><p style="color: var(--text-muted);">No specific directives for this train. It may be running normally.</p></div>`;
+  } else {
+    trainRecs.forEach((r, i) => {
+      const item = document.createElement('div');
+      item.className = `rec-item ${r.priority}`;
+      item.style.animationDelay = `${i * 50}ms`;
+      item.innerHTML = `
+        <div class="rec-action">
+          ${r.priority === 'critical' ? '🔴' : r.priority === 'high' ? '🟠' : '🟡'}
+          ${r.action}
+        </div>
+        <div class="rec-meta">
+          <span class="rec-reason">${r.reason}</span>
+          <span class="rec-confidence ${r.priority}">${r.confidence}% confidence</span>
+        </div>
+      `;
+      recList.appendChild(item);
+    });
+  }
+
+  // Draw Specific Train Route Map
+  if (specificTrainMap && specificTrainLayer) {
+    specificTrainLayer.clearLayers();
+    const parts = train.route.split('→');
+    const origCoords = STATION_COORDS[parts[0]] || [28.6139, 77.2090];
+    const destCoords = STATION_COORDS[parts[1]] || [18.9690, 72.8205];
+    
+    // Draw route line
+    const routeLine = L.polyline([origCoords, destCoords], {
+      color: '#818cf8',
+      weight: 3,
+      opacity: 0.6,
+      dashArray: '5, 10'
+    }).addTo(specificTrainLayer);
+
+    // Draw origin and destination markers
+    L.circleMarker(origCoords, { radius: 6, fillColor: '#22c55e', color: '#fff', weight: 2, fillOpacity: 1 }).addTo(specificTrainLayer)
+     .bindTooltip('Origin: ' + parts[0], { permanent: false });
+    L.circleMarker(destCoords, { radius: 6, fillColor: '#ef4444', color: '#fff', weight: 2, fillOpacity: 1 }).addTo(specificTrainLayer)
+     .bindTooltip('Destination: ' + parts[1], { permanent: false });
+
+    // Draw current train position (interpolate based on a pseudo-progress)
+    const progress = 0.3 + (Math.random() * 0.4); // between 30% and 70%
+    const trainLat = origCoords[0] + (destCoords[0] - origCoords[0]) * progress;
+    const trainLng = origCoords[1] + (destCoords[1] - origCoords[1]) * progress;
+    
+    const color = train.aggregate_risk >= 0.7 ? '#ef4444' : train.aggregate_risk >= 0.45 ? '#f97316' : '#eab308';
+    L.circleMarker([trainLat, trainLng], {
+      radius: 8,
+      fillColor: color,
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 1
+    }).addTo(specificTrainLayer).bindTooltip('Live Location', { permanent: true, direction: 'top' }).openTooltip();
+
+    // Fit map bounds to show the entire route with padding
+    setTimeout(() => {
+      specificTrainMap.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
+    }, 100);
+  }
+
+  // Render the coach heatmap for this train
+  renderHeatmap(trainId);
+}
+
 // ── Train Leaderboard ─────────────────────────────────────────────────────────
 function renderLeaderboard() {
   const sortBy = document.getElementById('sort-trains').value;
@@ -394,10 +524,73 @@ function renderLeaderboard() {
     if (riskFilter !== 'all' && lvl !== riskFilter) return;
 
     const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#eab308' : '#22c55e';
+    const delayMin = train.delay_minutes || 0;
+    const delayBadge = delayMin === 0
+      ? `<span style="font-size:0.68rem;color:#22c55e;font-weight:600;">🟢 On Time</span>`
+      : `<span style="font-size:0.68rem;color:${delayMin > 60 ? '#ef4444' : '#f97316'};font-weight:600;">🔴 ${train.delay_status}</span>`;
+
     const icons = [
       train.coaches.some(c => c.overcrowding_risk > 0.6) ? '🚨 Overcrowding' : '',
       train.coaches.some(c => c.ticketless_risk > 0.5)   ? '⚠️ Ticketless' : '',
+      train.coaches.some(c => c.coach_type === 'GEN')    ? '🚃 GEN coaches' : '',
     ].filter(Boolean).join(' · ');
+
+    const item = document.createElement('div');
+    item.className = 'lb-item';
+    item.innerHTML = `
+      <div class="lb-header">
+        <div>
+          <div class="lb-name">${train.train_name}</div>
+          <div class="lb-id">${train.train_id} · ${train.route} · Dep ${train.departs}</div>
+        </div>
+        <div class="lb-meta" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span class="lb-badge ${lvl}">${pct}% risk</span>
+          ${delayBadge}
+        </div>
+      </div>
+      ${icons ? `<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:6px">${icons}</div>` : ''}
+      <div class="lb-bar-bg"><div class="lb-bar" style="width:0%;background:${barColor}" data-target="${pct}"></div></div>
+    `;
+    // Click → switch to Train Inspector tab with that train selected
+    item.onclick = () => {
+      document.getElementById('heatmap-train-select').value = train.train_id;
+      switchTab('train');
+    };
+    list.appendChild(item);
+
+    // Animate bar
+    setTimeout(() => {
+      const bar = item.querySelector('.lb-bar');
+      if (bar) bar.style.width = pct + '%';
+    }, 50 + i * 30);
+  });
+}
+
+// ── Station-Filtered Leaderboard ──────────────────────────────────────────────
+function renderLeaderboardForStation(stationCode) {
+  // Filter trains whose route contains the selected station code
+  const stationStation = DATA.stations.find(s => s.station_code === stationCode);
+  const list = document.getElementById('leaderboard-list');
+  list.innerHTML = '';
+
+  // Trains that pass through this station (match by origin/destination code in route)
+  let filteredTrains = DATA.trains.filter(t => t.route.includes(stationCode));
+
+  // If no exact route match, just show all trains sorted by risk (fallback)
+  if (filteredTrains.length === 0) filteredTrains = [...DATA.trains];
+
+  filteredTrains.sort((a, b) => b.aggregate_risk - a.aggregate_risk);
+
+  // Header showing what we're filtering by
+  const header = document.createElement('div');
+  header.style.cssText = 'padding: 8px 12px; font-size: 0.75rem; color: #818cf8; font-weight: 600; border-bottom: 1px solid rgba(99,102,241,0.2); margin-bottom: 6px;';
+  header.textContent = `📍 Trains at ${stationCode}${stationStation ? ' — ' + stationStation.station_name : ''} (${filteredTrains.length} found)`;
+  list.appendChild(header);
+
+  filteredTrains.slice(0, 10).forEach((train, i) => {
+    const pct = Math.round(train.aggregate_risk * 100);
+    const lvl = pct >= 70 ? 'critical' : pct >= 45 ? 'high' : pct >= 25 ? 'medium' : 'low';
+    const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#eab308' : '#22c55e';
 
     const item = document.createElement('div');
     item.className = 'lb-item';
@@ -411,17 +604,13 @@ function renderLeaderboard() {
           <span class="lb-badge ${lvl}">${pct}% risk</span>
         </div>
       </div>
-      ${icons ? `<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:6px">${icons}</div>` : ''}
-      <div class="lb-bar-bg"><div class="lb-bar" style="width:0%;background:${barColor}" data-target="${pct}"></div></div>
+      <div class="lb-bar-bg"><div class="lb-bar" style="width:0%;background:${barColor}"></div></div>
     `;
     item.onclick = () => {
       document.getElementById('heatmap-train-select').value = train.train_id;
-      renderHeatmap();
-      document.getElementById('heatmap-panel').scrollIntoView({ behavior: 'smooth' });
+      switchTab('train');
     };
     list.appendChild(item);
-
-    // Animate bar
     setTimeout(() => {
       const bar = item.querySelector('.lb-bar');
       if (bar) bar.style.width = pct + '%';
@@ -431,24 +620,40 @@ function renderLeaderboard() {
 
 // ── Station Congestion Chart ──────────────────────────────────────────────────
 function renderCongestionChart() {
-  const stations = DATA.stations.slice(0, 5);
-  const labels = stations[0]?.timeline.map(t => t.hour) || [];
+  const selectedCode = document.getElementById('filter-station').value;
   const colors = ['#818cf8', '#c084fc', '#f97316', '#22c55e', '#eab308'];
 
+  // If a specific station is selected, show only that one with full detail
+  // Otherwise show top 5 as overview
+  let stations;
+  if (selectedCode && selectedCode !== 'all') {
+    const found = DATA.stations.find(s => s.station_code === selectedCode);
+    stations = found ? [found] : DATA.stations.slice(0, 5);
+  } else {
+    stations = DATA.stations.slice(0, 5);
+  }
+
+  const labels = stations[0]?.timeline.map(t => t.hour) || [];
+
   const datasets = stations.map((s, i) => ({
-    label: s.station_code,
+    label: `${s.station_code} — ${s.station_name}`,
     data: s.timeline.map(t => Math.round(t.congestion * 100)),
-    borderColor: colors[i],
-    backgroundColor: colors[i] + '18',
-    borderWidth: 2,
-    pointRadius: 3,
-    pointHoverRadius: 6,
+    borderColor: colors[i % colors.length],
+    backgroundColor: colors[i % colors.length] + '22',
+    borderWidth: selectedCode && selectedCode !== 'all' ? 3 : 2,
+    pointRadius: selectedCode && selectedCode !== 'all' ? 5 : 3,
+    pointHoverRadius: 8,
     tension: 0.4,
-    fill: false,
+    fill: selectedCode && selectedCode !== 'all',
   }));
 
   const ctx = document.getElementById('congestion-chart').getContext('2d');
   if (congestionChart) congestionChart.destroy();
+
+  // If single station selected, also highlight its peak info in the panel title
+  const titleText = (selectedCode && selectedCode !== 'all')
+    ? `Station: ${stations[0]?.station_code} — ${stations[0]?.station_name}`
+    : 'Top 5 Stations (All)';
 
   congestionChart = new Chart(ctx, {
     type: 'line',
@@ -457,6 +662,12 @@ function renderCongestionChart() {
       responsive: true, maintainAspectRatio: false,
       interaction: { intersect: false, mode: 'index' },
       plugins: {
+        title: {
+          display: !!(selectedCode && selectedCode !== 'all'),
+          text: titleText,
+          color: '#818cf8',
+          font: { size: 12, weight: '600' }
+        },
         legend: { labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12, padding: 14 } },
         tooltip: {
           backgroundColor: 'rgba(13,17,23,0.95)',
@@ -473,32 +684,16 @@ function renderCongestionChart() {
           grid: { color: 'rgba(255,255,255,0.06)' }
         }
       },
-      animation: { duration: 1200, easing: 'easeInOutQuart' }
+      animation: { duration: 800, easing: 'easeInOutQuart' }
     }
   });
-}
 
-// ── Recommendations ───────────────────────────────────────────────────────────
-function renderRecommendations() {
-  const list = document.getElementById('rec-list');
-  list.innerHTML = '';
-  const recs = DATA.recommendations.slice(0, 10);
-  recs.forEach((r, i) => {
-    const item = document.createElement('div');
-    item.className = `rec-item ${r.priority}`;
-    item.style.animationDelay = `${i * 60}ms`;
-    item.innerHTML = `
-      <div class="rec-action">
-        ${r.priority === 'critical' ? '🔴' : r.priority === 'high' ? '🟠' : '🟡'}
-        ${r.action}
-      </div>
-      <div class="rec-meta">
-        <span class="rec-reason">${r.reason}</span>
-        <span class="rec-confidence ${r.priority}">${r.confidence}% confidence</span>
-      </div>
-    `;
-    list.appendChild(item);
-  });
+  // Also filter the leaderboard to only trains passing through selected station
+  if (selectedCode && selectedCode !== 'all') {
+    renderLeaderboardForStation(selectedCode);
+  } else {
+    renderLeaderboard();
+  }
 }
 
 // ── Refresh ───────────────────────────────────────────────────────────────────
@@ -506,8 +701,7 @@ async function refreshDashboard() {
   const btn = document.getElementById('refresh-btn');
   btn.classList.add('spinning');
   btn.disabled = true;
-  await loadData();
-  if (DATA) renderAll();
+  await pollLive();
   btn.classList.remove('spinning');
   btn.disabled = false;
 }
@@ -518,7 +712,8 @@ function renderAll() {
   renderMap();
   renderLeaderboard();
   renderCongestionChart();
-  renderRecommendations();
+  // If inspector tab is active, refresh it too
+  if (activeTab === 'train') renderSpecificTrainView();
 }
 
 // ── Keyboard shortcut ─────────────────────────────────────────────────────────

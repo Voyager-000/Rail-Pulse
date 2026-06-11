@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RailPulse – AI Railway Risk Intelligence Platform</title>
-  <meta name="description" content="RailPulse: AI-powered railway risk and resource allocation platform. Predicts overcrowding, ticketless travel, and station congestion in real-time using existing booking data." />
+  <meta name="description" content="RailPulse: AI-powered railway risk and resource allocation platform." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ LOGIN OVERLAY ════════ -->
+<!-- LOGIN OVERLAY -->
 <div id="login-overlay" class="login-overlay">
   <div class="login-box">
     <div class="logo-icon" style="margin: 0 auto 1.5rem; width: 48px; height: 48px;">
@@ -58,6 +58,13 @@
           icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
         }
       }
+
+      // Allow pressing Enter to login
+      document.getElementById('login-pass').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          handleLogin();
+        }
+      });
     </script>
     
     <button class="login-btn" onclick="handleLogin()">Secure Login</button>
@@ -68,7 +75,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ HEADER ════════ -->
+<!-- HEADER -->
 <header class="header" id="main-header">
   <div class="header-left">
     <div class="logo">
@@ -123,245 +130,272 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════ TAGLINE ════════ -->
 <div class="tagline-bar">
   <p>Unlike solutions requiring passenger app installs, <strong>RailPulse works entirely on existing railway booking & operational data.</strong> Passengers don't change anything. Staff get smarter directions.</p>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ FILTERS ════════ -->
-<div class="filters-bar">
-  <div class="filter-group">
-    <label for="filter-date">Date</label>
-    <input type="date" id="filter-date" />
-  </div>
-  <div class="filter-group">
-    <label for="filter-train">Train</label>
-    <select id="filter-train">
-      <option value="all">All Trains</option>
-    </select>
-  </div>
-  <div class="filter-group">
-    <label for="filter-risk">Risk Level</label>
-    <select id="filter-risk">
-      <option value="all">All Levels</option>
-      <option value="critical">🔴 Critical</option>
-      <option value="high">🟠 High</option>
-      <option value="medium">🟡 Medium</option>
-      <option value="low">🟢 Low</option>
-    </select>
-  </div>
-  <div class="filter-group">
-    <label for="filter-station">Station</label>
-    <select id="filter-station">
-      <option value="all">All Stations</option>
-    </select>
-  </div>
+<!-- TABS -->
+<div class="tabs-container">
+  <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">🌍 Network Overview</button>
+  <button class="tab-btn" id="tab-train" onclick="switchTab('train')">🚆 Train Inspector</button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ SUMMARY CARDS ════ -->
-<section class="summary-grid" id="summary-section">
-  <div class="stat-card critical" id="card-critical">
-    <div class="stat-icon">🔴</div>
-    <div class="stat-body">
-      <div class="stat-value" id="stat-critical">--</div>
-      <div class="stat-label">Critical Coaches</div>
-      <div class="stat-sub" id="stat-critical-sub">Loading...</div>
+<!-- ========================= VIEW: OVERVIEW ========================= -->
+<div id="view-overview" class="view-section active">
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label for="filter-date">Date</label>
+      <input type="date" id="filter-date" />
     </div>
-    <div class="stat-pulse"></div>
+    <div class="filter-group">
+      <label for="sort-leaderboard">Sort Leaderboard By</label>
+      <select id="sort-trains" onchange="renderLeaderboard()">
+        <option value="risk">Highest Risk First</option>
+        <option value="departure">Departure Time</option>
+      </select>
+    </div>
+    <!-- Hidden elements kept for JS compatibility -->
+    <select id="filter-risk" style="display:none"><option value="all">All Levels</option></select>
+    <select id="filter-station" style="display:none"><option value="all">All Stations</option></select>
   </div>
-  <div class="stat-card high" id="card-high">
-    <div class="stat-icon">🟠</div>
-    <div class="stat-body">
-      <div class="stat-value" id="stat-high">--</div>
-      <div class="stat-label">High-Risk Trains</div>
-      <div class="stat-sub" id="stat-high-sub">Loading...</div>
+
+  <section class="summary-grid" id="summary-section">
+    <div class="stat-card critical" id="card-critical">
+      <div class="stat-icon">🔴</div>
+      <div class="stat-body">
+        <div class="stat-value" id="stat-critical">--</div>
+        <div class="stat-label">Critical Coaches</div>
+        <div class="stat-sub" id="stat-critical-sub">Loading...</div>
+      </div>
+      <div class="stat-pulse"></div>
+    </div>
+    <div class="stat-card high" id="card-high">
+      <div class="stat-icon">🟠</div>
+      <div class="stat-body">
+        <div class="stat-value" id="stat-high">--</div>
+        <div class="stat-label">High-Risk Trains</div>
+        <div class="stat-sub" id="stat-high-sub">Loading...</div>
+      </div>
+    </div>
+    <div class="stat-card station" id="card-station">
+      <div class="stat-icon">🏛️</div>
+      <div class="stat-body">
+        <div class="stat-value" id="stat-stations">--</div>
+        <div class="stat-label">Stations Monitored</div>
+        <div class="stat-sub" id="stat-stations-sub">Loading...</div>
+      </div>
+    </div>
+    <div class="stat-card staff" id="card-staff">
+      <div class="stat-icon">👥</div>
+      <div class="stat-body">
+        <div class="stat-value" id="stat-staff">--</div>
+        <div class="stat-label">Staff Deployments</div>
+        <div class="stat-sub" id="stat-staff-sub">Loading...</div>
+      </div>
+    </div>
+    <div class="stat-card ticketless" id="card-ticketless">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-body">
+        <div class="stat-value" id="stat-ticketless">--</div>
+        <div class="stat-label">Ticketless Alerts</div>
+        <div class="stat-sub" id="stat-ticketless-sub">Loading...</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-grid">
+    <div class="left-col" style="flex: 2;">
+      <!-- Live Train Map Panel -->
+      <section class="panel" id="map-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+              <line x1="15" y1="3" x2="15" y2="21"></line>
+            </svg>
+            Live Train Tracking Map (Network-wide)
+          </div>
+        </div>
+        <div id="train-map" style="height: 600px; width: 100%; border-radius: 8px; z-index: 1;"></div>
+      </section>
+    </div>
+
+    <div class="right-col" style="flex: 1;">
+      <!-- Train Risk Leaderboard -->
+      <section class="panel" id="leaderboard-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 20V10M12 20V4M6 20v-6"/>
+            </svg>
+            Train Risk Leaderboard
+          </div>
+          <select class="panel-select" id="sort-trains" onchange="renderLeaderboard()">
+            <option value="risk">By Risk</option>
+            <option value="departure">By Departure</option>
+          </select>
+        </div>
+        <div class="leaderboard-list" id="leaderboard-list" style="max-height: 250px;">
+          <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+        </div>
+      </section>
+
+      <!-- Station Congestion Timeline -->
+      <section class="panel" id="station-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Station Congestion
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="congestion-chart"></canvas>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= VIEW: TRAIN ========================= -->
+<div id="view-train" class="view-section" style="display: none;">
+  <div class="filters-bar" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);">
+    <div class="filter-group" style="flex: 1;">
+      <label for="heatmap-train-select" style="color: #c4b5fd;">Currently Inspecting Train</label>
+      <select id="heatmap-train-select" onchange="renderSpecificTrainView()" style="font-size: 1.1rem; padding: 0.75rem; border-color: rgba(139, 92, 246, 0.5);">
+        <option value="">Select Train</option>
+      </select>
     </div>
   </div>
-  <div class="stat-card station" id="card-station">
-    <div class="stat-icon">🏛️</div>
-    <div class="stat-body">
-      <div class="stat-value" id="stat-stations">--</div>
-      <div class="stat-label">Stations Monitored</div>
-      <div class="stat-sub" id="stat-stations-sub">Loading...</div>
+
+  <section class="summary-grid" id="train-summary-section">
+    <div class="stat-card critical">
+      <div class="stat-icon">🔴</div>
+      <div class="stat-body">
+        <div class="stat-value" id="train-stat-critical">0</div>
+        <div class="stat-label">Critical Coaches</div>
+        <div class="stat-sub" id="train-stat-agg">--% avg risk</div>
+      </div>
     </div>
-  </div>
-  <div class="stat-card staff" id="card-staff">
-    <div class="stat-icon">👥</div>
-    <div class="stat-body">
-      <div class="stat-value" id="stat-staff">--</div>
-      <div class="stat-label">Staff Deployments</div>
-      <div class="stat-sub" id="stat-staff-sub">Loading...</div>
+    <div class="stat-card staff">
+      <div class="stat-icon">👥</div>
+      <div class="stat-body">
+        <div class="stat-value" id="train-stat-staff">0</div>
+        <div class="stat-label">Staff Deployments</div>
+        <div class="stat-sub">For this train</div>
+      </div>
     </div>
-  </div>
-  <div class="stat-card ticketless" id="card-ticketless">
-    <div class="stat-icon">⚠️</div>
-    <div class="stat-body">
-      <div class="stat-value" id="stat-ticketless">--</div>
-      <div class="stat-label">Ticketless Alerts</div>
-      <div class="stat-sub" id="stat-ticketless-sub">Loading...</div>
+    <div class="stat-card ticketless">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-body">
+        <div class="stat-value" id="train-stat-ticketless">0</div>
+        <div class="stat-label">Ticketless Alerts</div>
+        <div class="stat-sub">Coaches flagged</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════════════════════════════════════════════════════ MAIN GRID ════════ -->
-<main class="main-grid">
+  <main class="main-grid">
+    <div class="left-col" style="flex: 2;">
+      <!-- Coach Heatmap Panel -->
+      <section class="panel" id="heatmap-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="10" rx="2"/>
+              <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+              <line x1="12" y1="12" x2="12" y2="12"/>
+            </svg>
+            Coach Risk Heatmap
+          </div>
+        </div>
+        <div class="train-info-bar" id="train-info-bar">
+          <span id="train-route"></span>
+          <span id="train-departs"></span>
+          <span class="aggregate-risk-badge" id="agg-risk-badge"></span>
+        </div>
+        <div class="coach-type-legend">
+          <span class="legend-item"><span class="legend-dot low"></span> Low</span>
+          <span class="legend-item"><span class="legend-dot medium"></span> Medium</span>
+          <span class="legend-item"><span class="legend-dot high"></span> High</span>
+          <span class="legend-item"><span class="legend-dot critical"></span> Critical</span>
+        </div>
+        <div class="heatmap-container" id="heatmap-container">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading predictions...</p>
+          </div>
+        </div>
+      </section>
 
-  <!-- LEFT COLUMN -->
-  <div class="left-col">
+      <!-- Specific Train Route Map -->
+      <section class="panel" id="specific-train-map-panel" style="margin-top: 1rem;">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+              <line x1="15" y1="3" x2="15" y2="21"></line>
+            </svg>
+            Selected Train Route Map
+          </div>
+        </div>
+        <div id="specific-train-map" style="height: 350px; width: 100%; border-radius: 8px; z-index: 1;"></div>
+      </section>
+    </div>
 
-    <!-- Coach Heatmap Panel -->
-    <section class="panel" id="heatmap-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="7" width="20" height="10" rx="2"/>
-            <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
-            <line x1="12" y1="12" x2="12" y2="12"/>
-          </svg>
-          Coach Risk Heatmap
+    <div class="right-col" style="flex: 1;">
+      <!-- AI Recommendation Panel -->
+      <section class="panel" id="rec-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v4l3 3"/>
+            </svg>
+            AI Directives (This Train)
+          </div>
+          <div class="ai-badge">🤖 AI-Generated</div>
         </div>
-        <select class="panel-select" id="heatmap-train-select" onchange="renderHeatmap()">
-          <option value="">Select Train</option>
-        </select>
-      </div>
-      <div class="train-info-bar" id="train-info-bar">
-        <span id="train-route"></span>
-        <span id="train-departs"></span>
-        <span class="aggregate-risk-badge" id="agg-risk-badge"></span>
-      </div>
-      <div class="coach-type-legend">
-        <span class="legend-item"><span class="legend-dot low"></span> Low</span>
-        <span class="legend-item"><span class="legend-dot medium"></span> Medium</span>
-        <span class="legend-item"><span class="legend-dot high"></span> High</span>
-        <span class="legend-item"><span class="legend-dot critical"></span> Critical</span>
-      </div>
-      <div class="heatmap-container" id="heatmap-container">
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Loading predictions...</p>
+        <div class="rec-list" id="rec-list" style="max-height: 250px;">
+          <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Live Train Map Panel -->
-    <section class="panel" id="map-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
-            <line x1="9" y1="3" x2="9" y2="21"></line>
-            <line x1="15" y1="3" x2="15" y2="21"></line>
-          </svg>
-          Live Train Tracking Map
+      <!-- Risk Factor Breakdown -->
+      <section class="panel" id="radar-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
+            </svg>
+            Coach Factor Breakdown
+          </div>
+          <div class="panel-subtitle" id="radar-subtitle">Select a coach</div>
         </div>
-      </div>
-      <div id="train-map" style="height: 400px; width: 100%; border-radius: 8px; z-index: 1;"></div>
-    </section>
+        <div class="radar-container" style="display: none;">
+          <canvas id="radar-chart"></canvas>
+        </div>
+        <div class="risk-factor-bars" id="risk-bars">
+          <div class="rf-item">
+            <span class="rf-label">Occupancy Level</span>
+            <div class="rf-bar-bg"><div class="rf-bar" id="rf-occupancy" style="width:0%"></div></div>
+            <span class="rf-val" id="rfv-occupancy">--%</span>
+          </div>
+          <div class="rf-item">
+            <span class="rf-label">Ticketless History</span>
+            <div class="rf-bar-bg"><div class="rf-bar" id="rf-ticketless" style="width:0%"></div></div>
+            <span class="rf-val" id="rfv-ticketless">--</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
 
-    <!-- Station Congestion Timeline -->
-    <section class="panel" id="station-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-          </svg>
-          Station Congestion Forecast
-        </div>
-        <div class="panel-subtitle">Next 6 hours</div>
-      </div>
-      <div class="chart-wrapper">
-        <canvas id="congestion-chart"></canvas>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- RIGHT COLUMN -->
-  <div class="right-col">
-
-    <!-- Train Risk Leaderboard -->
-    <section class="panel" id="leaderboard-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 20V10M12 20V4M6 20v-6"/>
-          </svg>
-          Train Risk Leaderboard
-        </div>
-        <select class="panel-select" id="sort-trains" onchange="renderLeaderboard()">
-          <option value="risk">By Risk</option>
-          <option value="departure">By Departure</option>
-        </select>
-      </div>
-      <div class="leaderboard-list" id="leaderboard-list">
-        <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
-      </div>
-    </section>
-
-    <!-- AI Recommendation Panel -->
-    <section class="panel" id="rec-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 8v4l3 3"/>
-          </svg>
-          AI Deployment Directives
-        </div>
-        <div class="ai-badge">🤖 AI-Generated</div>
-      </div>
-      <div class="rec-list" id="rec-list">
-        <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
-      </div>
-    </section>
-
-    <!-- Risk Factor Breakdown -->
-    <section class="panel" id="radar-panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
-          </svg>
-          Risk Factor Breakdown
-        </div>
-        <div class="panel-subtitle" id="radar-subtitle">Select a coach</div>
-      </div>
-      <div class="radar-container">
-        <canvas id="radar-chart"></canvas>
-      </div>
-      <div class="risk-factor-bars" id="risk-bars">
-        <div class="rf-item">
-          <span class="rf-label">Occupancy Level</span>
-          <div class="rf-bar-bg"><div class="rf-bar" id="rf-occupancy" style="width:0%"></div></div>
-          <span class="rf-val" id="rfv-occupancy">--%</span>
-        </div>
-        <div class="rf-item">
-          <span class="rf-label">Holiday Pressure</span>
-          <div class="rf-bar-bg"><div class="rf-bar" id="rf-holiday" style="width:0%"></div></div>
-          <span class="rf-val" id="rfv-holiday">--%</span>
-        </div>
-        <div class="rf-item">
-          <span class="rf-label">Ticketless History</span>
-          <div class="rf-bar-bg"><div class="rf-bar" id="rf-ticketless" style="width:0%"></div></div>
-          <span class="rf-val" id="rfv-ticketless">--</span>
-        </div>
-        <div class="rf-item">
-          <span class="rf-label">Event Proximity</span>
-          <div class="rf-bar-bg"><div class="rf-bar" id="rf-event" style="width:0%"></div></div>
-          <span class="rf-val" id="rfv-event">--%</span>
-        </div>
-        <div class="rf-item">
-          <span class="rf-label">Cancellation Surge</span>
-          <div class="rf-bar-bg"><div class="rf-bar" id="rf-cancel" style="width:0%"></div></div>
-          <span class="rf-val" id="rfv-cancel">--%</span>
-        </div>
-      </div>
-    </section>
-
-  </div>
-</main>
-
-<!-- ═══════════════════════════════════════════════════════ COACH DETAIL ════ -->
+<!-- COACH DETAIL MODAL -->
 <div class="coach-detail-overlay" id="coach-overlay" onclick="closeCoachDetail(event)">
   <div class="coach-detail-modal" id="coach-modal">
     <button class="modal-close" onclick="closeCoachDetail(null, true)">✕</button>
@@ -391,16 +425,12 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ FOOTER ════════ -->
 <footer class="footer">
   <div class="footer-left">
-    <strong>RailPulse</strong> · AI-Powered Railway Risk Intelligence · 
-    Built on existing booking data — no passenger behavioral change required.
+    <strong>RailPulse</strong> · AI-Powered Railway Risk Intelligence
   </div>
   <div class="footer-right">
-    Model AUC: <span id="footer-auc">--</span> · 
-    Data refreshed every 60s · 
-    <span id="footer-date"></span>
+    Model AUC: <span id="footer-auc">--</span> · Data refreshed live
   </div>
 </footer>
 
