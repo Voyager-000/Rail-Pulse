@@ -1,22 +1,18 @@
 """
-RailPulse - FastAPI Backend
-Serves risk predictions as REST endpoints for the dashboard.
+RailPulse - FastAPI Backend with Live Simulation Engine
+Serves risk predictions and real-time live simulation.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 import json
-import os
-import subprocess
+import asyncio
+import random
 from datetime import datetime
 from pathlib import Path
 
-app = FastAPI(
-    title="RailPulse API",
-    description="AI-Powered Railway Risk & Resource Allocation Platform",
-    version="1.0.0",
-)
+app = FastAPI(title="RailPulse API", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,110 +23,117 @@ app.add_middleware(
 )
 
 PREDICTIONS_FILE = Path("data/predictions.json")
+LIVE_STATE = None
 
+STATION_COORDS = {
+  'NDLS': [28.6139, 77.2090], 'BCT':  [18.9690, 72.8205],
+  'HWH':  [22.5855, 88.3412], 'SBC':  [12.9781, 77.5695],
+  'BPL':  [23.2599, 77.4126], 'SDAH': [22.5678, 88.3712],
+  'BDTS': [19.0553, 72.8354], 'CSTM': [18.9398, 72.8354],
+  'FZR':  [30.9304, 74.6186], 'RJPB': [25.5960, 85.1517],
+  'TVC':  [8.4875,  76.9486], 'LTT':  [19.0683, 72.8906],
+  'DBRG': [27.4728, 94.9120], 'ERS':  [9.9691,  76.2778],
+  'VAR':  [25.3176, 82.9739], 'RTE':  [17.3850, 78.4867],
+}
 
-def load_predictions():
-    if not PREDICTIONS_FILE.exists():
-        raise HTTPException(
-            status_code=503,
-            detail="Predictions not yet generated. Run `python model/predict.py` first."
-        )
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@app.post("/api/login")
+def login(req: LoginRequest):
+    # For hackathon demo, accept 'password'
+    if req.password == "password":
+        return {"token": "secure-irctc-token-99x", "user": req.username.upper()}
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+
+async def simulator_loop():
+    global LIVE_STATE
+    while not PREDICTIONS_FILE.exists():
+        await asyncio.sleep(1)
+    
     with open(PREDICTIONS_FILE) as f:
-        return json.load(f)
+        LIVE_STATE = json.load(f)
+    
+    # Initialize physical coordinates for trains
+    for train in LIVE_STATE["trains"]:
+        parts = train["route"].split('→')
+        orig = STATION_COORDS.get(parts[0])
+        dest = STATION_COORDS.get(parts[1]) if len(parts) > 1 else None
+        
+        # Fallbacks for unknown stations
+        if not orig: orig = [22.0 + random.uniform(-5, 5), 78.0 + random.uniform(-5, 5)]
+        if not dest: dest = [22.0 + random.uniform(-5, 5), 78.0 + random.uniform(-5, 5)]
+        
+        progress = random.uniform(0.1, 0.9)
+        train["lat"] = orig[0] + (dest[0] - orig[0]) * progress
+        train["lon"] = orig[1] + (dest[1] - orig[1]) * progress
+        train["target_lat"] = dest[0]
+        train["target_lon"] = dest[1]
+        train["orig_lat"] = orig[0]
+        train["orig_lon"] = orig[1]
 
+    while True:
+        await asyncio.sleep(2.0) # Tick every 2 seconds
+        
+        # 1. Move trains
+        for train in LIVE_STATE["trains"]:
+            lat_diff = train["target_lat"] - train["lat"]
+            lon_diff = train["target_lon"] - train["lon"]
+            dist = (lat_diff**2 + lon_diff**2)**0.5
+            
+            if dist < 0.1:
+                # Turn around
+                train["target_lat"], train["orig_lat"] = train["orig_lat"], train["target_lat"]
+                train["target_lon"], train["orig_lon"] = train["orig_lon"], train["target_lon"]
+            else:
+                speed = 0.05  # Move slowly
+                train["lat"] += (lat_diff / dist) * speed
+                train["lon"] += (lon_diff / dist) * speed
 
-@app.get("/", tags=["Health"])
-def root():
-    return {
-        "service": "RailPulse API",
-        "version": "1.0.0",
-        "status": "operational",
-        "tagline": "Predict. Prioritize. Protect.",
-        "endpoints": ["/api/summary", "/api/predictions", "/api/trains", "/api/stations", "/api/recommendations"],
-    }
+        # 2. Simulate Dynamic Boarding/Alighting (Random spikes)
+        if random.random() < 0.4: # 40% chance every 2s
+            t = random.choice(LIVE_STATE["trains"])
+            c = random.choice(t["coaches"])
+            
+            # Fluctuate occupancy
+            fluctuation = random.uniform(-0.05, 0.15)
+            c["occupancy_ratio"] = max(0.1, min(1.8, c["occupancy_ratio"] + fluctuation))
+            c["booked_seats"] = int(c["capacity"] * c["occupancy_ratio"])
+            
+            # Fast approximation of XGBoost logic for demo
+            c["overcrowding_risk"] = min(0.99, max(0.01, (c["occupancy_ratio"] - 0.7) * 1.5))
+            c["composite_risk"] = round(c["overcrowding_risk"] * 0.6 + c["ticketless_risk"] * 0.4, 3)
+            
+            if c["composite_risk"] >= 0.7: c["risk_level"] = "critical"
+            elif c["composite_risk"] >= 0.45: c["risk_level"] = "high"
+            elif c["composite_risk"] >= 0.25: c["risk_level"] = "medium"
+            else: c["risk_level"] = "low"
+            
+            # Update train aggregate
+            t["aggregate_risk"] = round(sum(coach["composite_risk"] for coach in t["coaches"]) / len(t["coaches"]), 3)
+            t["critical_coaches"] = sum(1 for coach in t["coaches"] if coach["risk_level"] == "critical")
+            
+        LIVE_STATE["generated_at"] = datetime.now().isoformat()
 
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(simulator_loop())
 
-@app.get("/api/summary", tags=["Dashboard"])
-def get_summary():
-    """Returns headline stats for the top summary cards."""
-    data = load_predictions()
-    return {
-        "generated_at": data["generated_at"],
-        "date": data["date"],
-        **data["summary"],
-    }
-
-
-@app.get("/api/predictions", tags=["Predictions"])
-def get_all_predictions():
-    """Returns complete predictions for all trains and coaches."""
-    return load_predictions()
-
-
-@app.get("/api/trains", tags=["Trains"])
-def get_trains(sort_by: str = "risk"):
-    """Returns trains sorted by risk score or departure time."""
-    data = load_predictions()
-    trains = data["trains"]
-    if sort_by == "departure":
-        trains = sorted(trains, key=lambda x: x["departs"])
-    else:
-        trains = sorted(trains, key=lambda x: x["aggregate_risk"], reverse=True)
-    return {"trains": trains, "generated_at": data["generated_at"]}
-
-
-@app.get("/api/trains/{train_id}", tags=["Trains"])
-def get_train(train_id: str):
-    """Returns detailed coach-level predictions for a specific train."""
-    data = load_predictions()
-    for train in data["trains"]:
-        if train["train_id"] == train_id:
-            return train
-    raise HTTPException(status_code=404, detail=f"Train {train_id} not found")
-
-
-@app.get("/api/stations", tags=["Stations"])
-def get_stations():
-    """Returns station congestion forecasts (6-hour timeline)."""
-    data = load_predictions()
-    return {
-        "stations": data["stations"],
-        "generated_at": data["generated_at"],
-    }
-
-
-@app.get("/api/recommendations", tags=["Recommendations"])
-def get_recommendations(priority: str = None):
-    """Returns AI-generated staff deployment recommendations."""
-    data = load_predictions()
-    recs = data["recommendations"]
-    if priority:
-        recs = [r for r in recs if r["priority"] == priority]
-    return {
-        "recommendations": recs,
-        "total": len(recs),
-        "generated_at": data["generated_at"],
-    }
-
-
-@app.post("/api/refresh", tags=["Admin"])
-def refresh_predictions():
-    """Triggers a fresh prediction run (re-runs predict.py)."""
-    try:
-        result = subprocess.run(
-            ["python", "model/predict.py"],
-            capture_output=True,
-            text=True,
-            timeout=60,
-        )
-        if result.returncode != 0:
-            raise HTTPException(status_code=500, detail=result.stderr)
-        return {"status": "refreshed", "refreshed_at": datetime.now().isoformat()}
-    except subprocess.TimeoutExpired:
-        raise HTTPException(status_code=504, detail="Prediction refresh timed out")
-
+@app.get("/api/live", tags=["Live"])
+def get_live_state():
+    if not LIVE_STATE:
+        raise HTTPException(status_code=503, detail="Simulator starting up...")
+    
+    # Recalculate summary live
+    all_coaches = [c for t in LIVE_STATE["trains"] for c in t["coaches"]]
+    LIVE_STATE["summary"]["critical_coaches"] = sum(1 for c in all_coaches if c["risk_level"] == "critical")
+    LIVE_STATE["summary"]["high_risk_coaches"] = sum(1 for c in all_coaches if c["risk_level"] in ["critical", "high"])
+    
+    # Sort trains for leaderboard
+    LIVE_STATE["trains"] = sorted(LIVE_STATE["trains"], key=lambda x: x["aggregate_risk"], reverse=True)
+    return LIVE_STATE
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚂 Starting RailPulse API server...")
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
