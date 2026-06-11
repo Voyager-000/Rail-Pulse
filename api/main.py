@@ -4,6 +4,8 @@ Serves risk predictions and real-time live simulation.
 """
 
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import json
@@ -22,7 +24,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-PREDICTIONS_FILE = Path("data/predictions.json")
+BASE_DIR = Path(__file__).resolve().parent.parent
+PREDICTIONS_FILE = BASE_DIR / "data" / "predictions.json"
+
+@app.get("/", include_in_schema=False)
+def read_root():
+    return RedirectResponse(url="/dashboard/index.html")
+
+app.mount("/dashboard", StaticFiles(directory=BASE_DIR / "dashboard"), name="dashboard")
+app.mount("/data", StaticFiles(directory=BASE_DIR / "data"), name="data")
 LIVE_STATE = None
 
 STATION_COORDS = {

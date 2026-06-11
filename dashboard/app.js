@@ -33,7 +33,7 @@ const STATION_COORDS = {
 
 async function pollLive() {
   try {
-    const res = await fetch('http://localhost:8000/api/live', { signal: AbortSignal.timeout(2000) });
+    const res = await fetch('/api/live', { signal: AbortSignal.timeout(2000) });
     if (res.ok) {
       DATA = await res.json();
       setStatus('LIVE', true);
@@ -736,7 +736,7 @@ async function handleLogin() {
   btn.style.opacity = '0.7';
   
   try {
-    const res = await fetch('http://localhost:8000/api/login', {
+    const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: id, password: pass })
