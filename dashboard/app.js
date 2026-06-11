@@ -545,7 +545,7 @@ async function handleLogin() {
       
       // Start live simulation polling
       await pollLive();
-      setInterval(pollLive, 2000); // 2 second polling for live simulation demo
+      setInterval(pollLive, 10000); // 10 second polling for smoother hackathon demo
     } else {
       btn.textContent = 'Invalid Password';
       btn.style.background = '#ef4444';
