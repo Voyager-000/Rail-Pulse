@@ -31,12 +31,108 @@ const STATION_COORDS = {
 };
 // FALLBACK_DATA is loaded from predictions.js
 
+function simulateDateVariance(baseData, dateStr) {
+    let seed = 0;
+    for (let i = 0; i < dateStr.length; i++) {
+        seed += dateStr.charCodeAt(i);
+    }
+    
+    const random = () => {
+        let x = Math.sin(seed++) * 10000;
+        return x - Math.floor(x);
+    };
+
+    baseData.trains.forEach(t => {
+        let t_agg = 0;
+        let crit_coaches = 0;
+        t.coaches.forEach(c => {
+            let variance = (random() * 0.4) - 0.2;
+            const isWeekend = new Date(dateStr).getDay() === 0 || new Date(dateStr).getDay() === 6;
+            if (isWeekend) variance += 0.15;
+            
+            c.overcrowding_risk = Math.max(0.01, Math.min(0.99, c.overcrowding_risk + variance));
+            c.ticketless_risk = Math.max(0.01, Math.min(0.99, c.ticketless_risk + variance));
+            c.composite_risk = (c.overcrowding_risk * 0.6) + (c.ticketless_risk * 0.4);
+            
+            if (c.composite_risk >= 0.7) { c.risk_level = "critical"; crit_coaches++; }
+            else if (c.composite_risk >= 0.45) c.risk_level = "high";
+            else if (c.composite_risk >= 0.25) c.risk_level = "medium";
+            else c.risk_level = "low";
+            
+            t_agg += c.composite_risk;
+        });
+        
+        t.aggregate_risk = t.coaches.length ? (t_agg / t.coaches.length) : 0;
+        t.critical_coaches = crit_coaches;
+    });
+    
+    if (baseData.stations) {
+        baseData.stations.forEach(s => {
+            s.timeline.forEach(tl => {
+                let variance = (random() * 0.3) - 0.15;
+                tl.congestion = Math.max(0.05, Math.min(1.0, tl.congestion + variance));
+                tl.level = tl.congestion > 0.85 ? "critical" : tl.congestion > 0.65 ? "high" : tl.congestion > 0.45 ? "medium" : "low";
+            });
+            s.current_congestion = s.timeline[0].congestion;
+            s.current_level = s.timeline[0].level;
+        });
+    }
+    return baseData;
+}
+
+function injectTrainVariance(baseData) {
+    baseData.trains.forEach(t => {
+        let hash = 0;
+        for (let i = 0; i < t.train_id.length; i++) hash += t.train_id.charCodeAt(i);
+        
+        let t_agg = 0;
+        let crit_coaches = 0;
+        t.coaches.forEach((c, idx) => {
+            let v = Math.sin(hash + idx * 13) * 0.35;
+            
+            c.overcrowding_risk = Math.max(0.01, Math.min(0.99, c.overcrowding_risk + v));
+            c.ticketless_risk = Math.max(0.01, Math.min(0.99, c.ticketless_risk + v));
+            c.composite_risk = (c.overcrowding_risk * 0.6) + (c.ticketless_risk * 0.4);
+            
+            if (c.composite_risk >= 0.7) { c.risk_level = "critical"; crit_coaches++; }
+            else if (c.composite_risk >= 0.45) c.risk_level = "high";
+            else if (c.composite_risk >= 0.25) c.risk_level = "medium";
+            else c.risk_level = "low";
+            
+            t_agg += c.composite_risk;
+        });
+        t.aggregate_risk = t.coaches.length ? (t_agg / t.coaches.length) : 0;
+        t.critical_coaches = crit_coaches;
+    });
+    return baseData;
+}
+
 async function pollLive() {
+  const dateInput = document.getElementById('filter-date');
+  let dateVal = null;
+  let isToday = true;
+  if (dateInput) {
+      dateVal = dateInput.value;
+      if (!dateVal) {
+          dateVal = new Date().toISOString().split('T')[0];
+          dateInput.value = dateVal;
+      }
+      const todayStr = new Date().toISOString().split('T')[0];
+      isToday = (dateVal === todayStr);
+  }
+
   try {
     const res = await fetch('/api/live', { signal: AbortSignal.timeout(2000) });
     if (res.ok) {
-      DATA = await res.json();
-      setStatus('LIVE', true);
+      let liveData = await res.json();
+      liveData = injectTrainVariance(liveData);
+      if (!isToday) {
+         liveData = simulateDateVariance(liveData, dateVal);
+         setStatus('SIMULATED', false);
+      } else {
+         setStatus('LIVE', true);
+      }
+      DATA = liveData;
       renderAll();
       return;
     }
@@ -44,8 +140,15 @@ async function pollLive() {
 
   // Fallback: use embedded data if offline
   if (typeof FALLBACK_DATA !== 'undefined' && FALLBACK_DATA) {
-      DATA = FALLBACK_DATA;
-      setStatus('OFFLINE', false);
+      let fData = JSON.parse(JSON.stringify(FALLBACK_DATA));
+      fData = injectTrainVariance(fData);
+      if (!isToday) {
+          fData = simulateDateVariance(fData, dateVal);
+          setStatus('SIMULATED', false);
+      } else {
+          setStatus('LIVE', true);
+      }
+      DATA = fData;
       renderAll();
       return;
   }
@@ -136,15 +239,17 @@ function renderSummary() {
     new Date(DATA.generated_at).toLocaleTimeString('en-IN', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
 
+const animTimers = {};
 function animateCount(id, target) {
   const el = document.getElementById(id);
+  if (animTimers[id]) clearInterval(animTimers[id]);
   let cur = 0;
-  const step = Math.ceil(target / 30);
-  const t = setInterval(() => {
+  const step = Math.max(1, Math.ceil(target / 15));
+  animTimers[id] = setInterval(() => {
     cur = Math.min(cur + step, target);
     el.textContent = cur;
-    if (cur >= target) clearInterval(t);
-  }, 30);
+    if (cur >= target) clearInterval(animTimers[id]);
+  }, 20);
 }
 
 // ── Filters / Selects ─────────────────────────────────────────────────────────
@@ -210,14 +315,14 @@ function renderMap() {
     }
 
     const pct = Math.round(t.aggregate_risk * 100);
-    const color = pct >= 70 ? '#ef4444' : pct >= 45 ? '#f97316' : pct >= 25 ? '#eab308' : '#22c55e';
+    const color = pct >= 70 ? '#ef4444' : pct >= 45 ? '#f97316' : pct >= 25 ? '#f59e0b' : '#22c55e';
     
     if (mapMarkers[t.train_id]) {
       // Smoothly animate existing marker
       mapMarkers[t.train_id].setLatLng(coords);
       mapMarkers[t.train_id].setStyle({ fillColor: color });
       mapMarkers[t.train_id]._popup.setContent(`
-        <div style="color: #333; font-family: Inter, sans-serif; font-size: 12px;">
+        <div style="color: #f8fafc; font-family: Inter, sans-serif; font-size: 12px;">
           <strong style="font-size: 14px;">${t.train_name}</strong><br/>
           Route: ${t.route}<br/>
           Agg. Risk: <strong>${pct}%</strong>
@@ -235,7 +340,7 @@ function renderMap() {
       }).addTo(trainMap);
       
       circle.bindPopup(`
-        <div style="color: #333; font-family: Inter, sans-serif; font-size: 12px;">
+        <div style="color: #f8fafc; font-family: Inter, sans-serif; font-size: 12px;">
           <strong style="font-size: 14px;">${t.train_name}</strong><br/>
           Route: ${t.route}<br/>
           Agg. Risk: <strong>${pct}%</strong>
@@ -426,9 +531,9 @@ function renderSpecificTrainView() {
     return acc + (c.composite_risk > 0.7 ? 3 : c.composite_risk > 0.45 ? 2 : 1);
   }, 0);
 
-  document.getElementById('train-stat-critical').textContent = criticalCoaches;
-  document.getElementById('train-stat-staff').textContent = staffNeeded;
-  document.getElementById('train-stat-ticketless').textContent = ticketlessCoaches;
+  animateCount('train-stat-critical', criticalCoaches);
+  animateCount('train-stat-staff', staffNeeded);
+  animateCount('train-stat-ticketless', ticketlessCoaches);
   document.getElementById('train-stat-agg').textContent =
     `${Math.round(train.aggregate_risk * 100)}% aggregate risk`;
 
@@ -486,7 +591,7 @@ function renderSpecificTrainView() {
     const trainLat = origCoords[0] + (destCoords[0] - origCoords[0]) * progress;
     const trainLng = origCoords[1] + (destCoords[1] - origCoords[1]) * progress;
     
-    const color = train.aggregate_risk >= 0.7 ? '#ef4444' : train.aggregate_risk >= 0.45 ? '#f97316' : '#eab308';
+    const color = train.aggregate_risk >= 0.7 ? '#ef4444' : train.aggregate_risk >= 0.45 ? '#f97316' : '#f59e0b';
     L.circleMarker([trainLat, trainLng], {
       radius: 8,
       fillColor: color,
@@ -509,7 +614,8 @@ function renderSpecificTrainView() {
 // ── Train Leaderboard ─────────────────────────────────────────────────────────
 function renderLeaderboard() {
   const sortBy = document.getElementById('sort-trains').value;
-  const riskFilter = document.getElementById('filter-risk').value;
+  const riskFilter = document.getElementById('filter-risk')?.value || 'all';
+  
   let trains = [...DATA.trains];
 
   if (sortBy === 'departure') trains.sort((a, b) => a.departs.localeCompare(b.departs));
@@ -523,7 +629,7 @@ function renderLeaderboard() {
     const lvl = pct >= 70 ? 'critical' : pct >= 45 ? 'high' : pct >= 25 ? 'medium' : 'low';
     if (riskFilter !== 'all' && lvl !== riskFilter) return;
 
-    const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#eab308' : '#22c55e';
+    const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#f59e0b' : '#22c55e';
     const delayMin = train.delay_minutes || 0;
     const delayBadge = delayMin === 0
       ? `<span style="font-size:0.68rem;color:#22c55e;font-weight:600;">🟢 On Time</span>`
@@ -590,7 +696,7 @@ function renderLeaderboardForStation(stationCode) {
   filteredTrains.slice(0, 10).forEach((train, i) => {
     const pct = Math.round(train.aggregate_risk * 100);
     const lvl = pct >= 70 ? 'critical' : pct >= 45 ? 'high' : pct >= 25 ? 'medium' : 'low';
-    const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#eab308' : '#22c55e';
+    const barColor = lvl === 'critical' ? '#ef4444' : lvl === 'high' ? '#f97316' : lvl === 'medium' ? '#f59e0b' : '#22c55e';
 
     const item = document.createElement('div');
     item.className = 'lb-item';
@@ -621,7 +727,7 @@ function renderLeaderboardForStation(stationCode) {
 // ── Station Congestion Chart ──────────────────────────────────────────────────
 function renderCongestionChart() {
   const selectedCode = document.getElementById('filter-station').value;
-  const colors = ['#818cf8', '#c084fc', '#f97316', '#22c55e', '#eab308'];
+  const colors = ['#818cf8', '#c084fc', '#f97316', '#22c55e', '#f59e0b'];
 
   // If a specific station is selected, show only that one with full detail
   // Otherwise show top 5 as overview
@@ -723,8 +829,11 @@ document.addEventListener('keydown', e => {
 });
 
 // Filter events
-document.getElementById('filter-risk').addEventListener('change', renderLeaderboard);
-document.getElementById('filter-station').addEventListener('change', () => renderCongestionChart());
+document.getElementById('filter-risk')?.addEventListener('change', renderLeaderboard);
+document.getElementById('filter-station')?.addEventListener('change', () => renderCongestionChart());
+document.getElementById('filter-date')?.addEventListener('change', () => {
+    pollLive();
+});
 
 // ── Login ─────────────────────────────────────────────────────────────────────
 async function handleLogin() {
@@ -746,6 +855,8 @@ async function handleLogin() {
       const data = await res.json();
       document.getElementById('login-overlay').classList.add('hidden');
       document.getElementById('user-name-display').textContent = data.user;
+      localStorage.setItem('railpulse_loggedin', 'true');
+      localStorage.setItem('railpulse_user', data.user);
       
       // Start live simulation polling
       await pollLive();
@@ -763,6 +874,9 @@ async function handleLogin() {
     btn.textContent = 'API Offline - Using Fallback';
     setTimeout(() => {
       document.getElementById('login-overlay').classList.add('hidden');
+      document.getElementById('user-name-display').textContent = id || 'GUEST';
+      localStorage.setItem('railpulse_loggedin', 'true');
+      localStorage.setItem('railpulse_user', id || 'GUEST');
       pollLive(); // Will fall back to offline data
     }, 1500);
   }
@@ -771,4 +885,11 @@ async function handleLogin() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 (async function init() {
   startClock();
+  
+  if (localStorage.getItem('railpulse_loggedin') === 'true') {
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('user-name-display').textContent = localStorage.getItem('railpulse_user') || 'GUEST';
+    pollLive();
+    setInterval(pollLive, 10000);
+  }
 })();
